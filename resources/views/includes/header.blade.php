@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>General Dashboard &mdash; Stisla</title>
+    <title>Site dev &mdash; Project</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <!-- General CSS Files -->
@@ -39,17 +39,31 @@
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
             @guest
-                @if (Route::has('login'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li>
-                @endif
+                <div class="navbar-bg"></div>
+                <nav class="navbar navbar-expand-lg main-navbar mr-5 mt-3">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">SITE DEV</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                            <ul class="navbar-nav">
+                                @if (Route::has('login'))
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('login') }}">{{ __('Ingresar') }}</a>
+                                    </li>
+                                @endif
 
-                @if (Route::has('register'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    </li>
-                @endif
+                                @if (Route::has('register'))
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
             @else
                 <div class="navbar-bg"></div>
                 <nav class="navbar navbar-expand-lg main-navbar">
@@ -71,7 +85,7 @@
                         <li class="dropdown"><a href="#" data-toggle="dropdown"
                                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                                 <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-                                <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
+                                <div class="d-sm-none d-lg-inline-block">Hola {{ Auth::user()->user_name }}</div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <div class="dropdown-title">Logged in 5 min ago</div>
@@ -84,21 +98,15 @@
                                 <a href="features-settings.html" class="dropdown-item has-icon">
                                     <i class="fas fa-cog"></i> Settings
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item has-icon text-danger">
+                                {{-- <div class="dropdown-divider"></div> --}}
+                                <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger"
+                                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
                                     <i class="fas fa-sign-out-alt"></i> Logout
                                 </a>
-
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
-
 
                             </div>
                         </li>

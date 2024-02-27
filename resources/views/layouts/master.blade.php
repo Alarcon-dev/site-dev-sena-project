@@ -1,5 +1,7 @@
 @include('includes.header')
-@include('includes.sidebar')
+@if (Auth::user())
+    @include('includes.sidebar')
+@endif
 <!-- Main Content -->
 <div class="main-content">
     @yield('content')
