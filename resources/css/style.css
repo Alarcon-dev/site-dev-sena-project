@@ -1,5 +1,5 @@
 .user_profile{
-    margin-top: 25%;
+    margin-top: 18%;
     width: 65%;
     height: 65%;
     overflow: hidden;
@@ -8,7 +8,7 @@
 }
 
 .user_profile img{
-    width: 100%;
+    width: 95%;
     height: 100%;
     border-radius: 100%;
     
@@ -27,12 +27,21 @@
     border-radius: 100%;
 }
 
-
 .upload_file_update{
-    margin: auto;
+    height: 95%;
+    width: 95%;
+   overflow: hidden;
 }
 
 .upload_file_update img{
-    height: 100%;
-    width: 95%;
+    height: 90%;
+    width: 85%;
+   
+}
+
+
+.profile_show img{
+    height: 95%;
+    width: 90%;
+ 
 }

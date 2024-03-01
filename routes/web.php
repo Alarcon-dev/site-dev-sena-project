@@ -29,6 +29,8 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/destroy/user/{id_user}', 'user')->name('destroy.user');
     Route::get('/user/profile/{image_name?}', 'getProfileImage')->name('get.profile');
     Route::get('/user/edit/{id_user}', 'edit');
+    Route::post('/update/user/{id_user}', 'update')->name('save.updates');
+    Route::get('/user/get/profile/{id_user}', 'getOneProfile');
 });
 
 Route::controller(CategoryController::class)->group(function () {

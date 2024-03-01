@@ -42,8 +42,8 @@
                                                     class="btn btn-danger btn-action" data-toggle="tooltip"
                                                     title="Eliminar">
                                                     <i class="fas fa-trash"></i></a>
-                                                <a href="" class="btn btn-primary btn-action" data-toggle="tooltip"
-                                                    title="Ver">
+                                                <a href="/user/get/profile/{{ $user->id_user }}"
+                                                    class="btn btn-primary btn-action" data-toggle="tooltip" title="Ver">
                                                     <i class="fas fa-eye"></i></a>
                                             </td>
                                         </tr>

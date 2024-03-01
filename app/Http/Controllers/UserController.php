@@ -6,6 +6,8 @@ use App\Models\User;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -51,7 +53,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        return view('users.show_profile', compact('user'));
+        return view('users.edit_profile', compact('user'));
     }
 
     /**
@@ -59,8 +61,47 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $request->validate([
+            'user_name' => ['string', 'max:255', 'alpha'],
+            'last_name' => ['string', 'max:255', 'alpha'],
+            'nick_name' => ['string', 'max:255', Rule::unique('users', 'nick_name')->ignore($id, 'id_user')],
+            'email' => ['string', 'email', 'max:255',  Rule::unique('users', 'email')->ignore($id, 'id_user')],
+            'user_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+        ]);
+
+
+        $user = User::where('id_user', $id)->update([
+            'user_name'  => $request->user_name,
+            'last_name' =>  $request->last_name,
+            'nick_name' => $request->nick_name,
+            'email' => $request->email,
+        ]);
+
+        $user_image = Auth::user()->user_image;
+        if ($request->hasFile('user_image') && $request->file('user_image')->isValid()) {
+            // Eliminar imagen anterior
+            if ($user_image) {
+                Storage::disk('user_profile')->delete($user_image);
+            }
+
+            // Guardar nueva imagen
+            $image = $request->file('user_image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            Storage::disk('user_profile')->put($imageName, file_get_contents($image));
+
+            $user_image_path = User::where('id_user', $id)->update([
+                'user_image' => $imageName,
+            ]);
+        }
+
+        if ($user || $user_image_path) {
+            return redirect()->back()->with('success', 'datos actulizados');
+        } else {
+            return redirect()->back()->with('wrong', 'error de actualización');
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -75,6 +116,12 @@ class UserController extends Controller
         $users = User::all();
 
         return view('administrador.gestion_usuarios.users_list', compact('users'));
+    }
+
+    public function getOneProfile(string $id)
+    {
+        $user = User::find($id);
+        return view('users.show_profile', compact('user'));
     }
 
     public function getProfileImage($image_name)

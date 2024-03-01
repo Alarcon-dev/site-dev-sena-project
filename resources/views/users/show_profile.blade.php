@@ -1,78 +1,35 @@
 @extends('layouts.master')
 @section('content')
-    <div class="section-body" style="margin-top: 8%">
-        <h2 class="section-title">Hola, {{ $user->user_name }}</h2>
-        <p class="section-lead">
-            Aquí puedes cambiar la información publica de tu perfil.
-        </p>
+    <div class="col-12 col-sm-12 col-lg-6" style="margin: auto; margin-top: 8%">
+        <div class="card author-box card-primary">
+            <div class="card-body mt-3">
 
-        <div class="row mt-sm-4">
-            <div class="col-12 col-md-12 col-lg-5">
-                <div class="card profile-widget">
-                    <div class="upload_file_update">
-                        <img src='{{ route('get.profile', ['image_name' => $user->user_image]) }}' alt="">
+                <div class="row">
+                    <div class="col-sm-4 float-left profile_show">
+                        <div class="container float-left ">
+                            <img src="{{ route('get.profile', ['image_name' => $user->user_image]) }}" alt="">
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12" style="margin-top: 28%;">
-                            <div class="form-group col-md-12 col-12">
-                                <label>Cambiar imagen</label>
-                                <input type="file" class="form-control" value="Ujang" required="">
-                                <div class="invalid-feedback">
-                                    Please fill in the first name
-                                </div>
-                            </div>
+
+                    <div class="col-sm-8 float-right mt-1">
+                        <div class="author-box-name">
+                            <h6><span>Nombre: </span>{{ $user->user_name }}</h6>
+                            <h6><span>Apellido: </span>{{ $user->last_name }}</h6>
+                            <h6><span>Email: </span>{{ $user->email }}</h6>
+                            <h6>se unió
+                                {{ $user->created_at->locale('es')->diffForHumans() }}
+                            </h6>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-12 col-md-12 col-lg-7">
-                <div class="card">
-                    <form method="post" class="needs-validation" novalidate="">
-                        <div class="card-header">
-                            <h4>Editar Perfil</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="form-group col-md-6 col-12">
-                                    <label for="user_name">Nombre</label>
-                                    <input type="text" class="form-control" name="user_name"
-                                        value="{{ $user->user_name }}" required="">
-                                    <div class="invalid-feedback">
-                                        Please fill in the first name
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6 col-12">
-                                    <label for="last_name">Apellido</label>
-                                    <input type="text" class="form-control" name="last_name"
-                                        value="{{ $user->last_name }}" required="">
-                                    <div class="invalid-feedback">
-                                        Please fill in the last name
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-7 col-12">
-                                    <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" value="{{ $user->email }}"
-                                        required="">
-                                    <div class="invalid-feedback">
-                                        Please fill in the email
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-5 col-12">
-                                    <label>Nombre de usuario</label>
-                                    <input type="tel" name="nick_name" class="form-control"
-                                        value="{{ $user->nick_name }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer text-right">
-                            <button class="btn btn-primary">Save Changes</button>
-                        </div>
-                    </form>
+                <div class="col-md-12  mt-5">
+                    <a href="#" class="btn btn-danger btn-icon icon-right">Ver publicaciones <i
+                            class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 @endsection
