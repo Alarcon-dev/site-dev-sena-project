@@ -1,13 +1,13 @@
 @extends('layouts.master')
 @section('content')
-    <div class="section-body" style="margin-top: 5%">
+    <div class="section-body justify-content-start" style="margin-top: 5%">
         <h2 class="section-title">Hola, {{ $user->user_name }}</h2>
         <p class="section-lead">
             Aquí puedes cambiar la información pública de tu perfil.
         </p>
-        <div class="row mt-sm-4">
+        <div class="row mt-sm-4 d-flex">
             @include('includes.alerts')
-            <div class="col-12 col-md-12 col-lg-5" style="margin-top: -3.3%">
+            <div class="col-12 col-md-12 col-lg-5 float-left" style="margin-top: -3.3%">
                 <div class="card profile-widget" style="min-height: 88.5%">
                     <div class="row">
                         <div class="col-md-12">
@@ -18,13 +18,12 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-12 col-md-12 col-lg-7">
-                <div class="card float-left">
+            <div class="col-12 col-md-12 col-lg-7 d-flex aling-content-start ">
+                <div class="card">
                     <form method="post" action="/update/user/{{ $user->id_user }}" enctype="multipart/form-data">
                         @csrf
 
-                        <div class="card-body">
+                        <div class="card-bodyfloat-left">
                             <!-- Mueve aquí los elementos del primer formulario -->
                             <div class="row">
                                 <div class="card-header">
