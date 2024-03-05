@@ -46,4 +46,7 @@ Route::controller(CategoryController::class)->group(function () {
 
 Route::controller(PublicationController::class)->group(function () {
     Route::get('/publication/create', 'create')->name('publication.create');
+    Route::post('/save/publication', 'store');
+    Route::get('/publication/image/{image_name?}', 'getPublicationImage');
+    Route::get('/publication/profile/{image_name?}', 'getPublicationProfile');
 });

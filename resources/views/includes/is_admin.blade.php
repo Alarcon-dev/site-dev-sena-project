@@ -1,11 +1,5 @@
 <div class="container" style="margin-right: -70%;">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="user_profile">
-                <img alt="img" src="/user/profile/{{ Auth::user()->user_image }}" class="">
-            </div>
-        </div>
-    </div>
+    @include('includes.admin_profile');
 </div>
 
 <li class="dropdown"><a href="#" data-toggle="dropdown"

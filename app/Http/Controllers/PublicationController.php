@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Publication;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PublicationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -30,12 +39,36 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
         $request->validate([
-            'cate_public_id' => ['string', 'max:255', 'alpha'],
-            'public_title' => ['string', 'max:255', 'alpha'],
-            'public_content' => ['string', 'max:255'],
+            'cate_public_id' => ['string', 'max:255'],
+            'public_title' => ['string', 'max:255'],
+            'public_content' => ['string', 'max:5000'],
             'public_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
         ]);
+
+        $publication = Publication::create([
+            'user_public_id' => (int)$user->id_user,
+            'cate_public_id' => (int)$request->cate_public_id,
+            'public_title' => $request->public_title,
+            'public_content' => $request->public_content,
+        ]);
+
+        if (!empty($request->public_image) && $request->public_image->isValid()) {
+            $image = $request->public_image;
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            Storage::disk('publications')->put($imageName, file_get_contents($image));
+
+            $publication->public_image = $imageName;
+
+            $publication->save();
+        }
+
+        if ($publication) {
+            return redirect()->route('home')->with('success', 'se a agregado una nueva publicación');
+        } else {
+            return back()->with('wrong', 'error de publicación');
+        }
     }
 
     /**
@@ -68,5 +101,19 @@ class PublicationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getPublicationImage($image_name)
+    {
+        $publication_image = Storage::disk('publications')->get($image_name);
+
+        return Response($publication_image, 200);
+    }
+
+    public function getPublicationProfile($image_name)
+    {
+        $publication_profile = Storage::disk('user_profile')->get($image_name);
+
+        return Response($publication_profile, 200);
     }
 }
