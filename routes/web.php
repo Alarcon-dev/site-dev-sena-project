@@ -26,7 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/all/users', 'getAllusers')->name('all.users');
-    Route::get('/destroy/user/{id_user}', 'user')->name('destroy.user');
+    Route::get('/destroy/user/{id_user}', 'destroy');
     Route::get('/user/profile/{image_name?}', 'getProfileImage')->name('get.profile');
     Route::get('/user/edit/{id_user}', 'edit');
     Route::post('/update/user/{id_user}', 'update')->name('save.updates');
@@ -36,4 +36,8 @@ Route::controller(UserController::class)->group(function () {
 Route::controller(CategoryController::class)->group(function () {
     Route::get('/create/category', 'create')->name('create_category');
     Route::post('/save/cateory/', 'store')->name('save.category');
+    Route::get('/show/categories/list', 'getAllCategories')->name('categories.list');
+    Route::get('/edit/categories/{id_category}', 'edit');
+    Route::post('/update/categorie/{id_categorie}', 'update');
+    Route::get('/delete/categories/{id_category}', 'destroy');
 });

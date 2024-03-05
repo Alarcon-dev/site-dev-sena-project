@@ -20,7 +20,7 @@
                 <span>Gestionar categorías</span></a>
             <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{{ route('create_category') }}">Crear Categoría</a></li>
-                <li><a class="nav-link" href="layout-transparent.html">Consultar Categoría</a></li>
+                <li><a class="nav-link" href="{{ route('categories.list') }}">Consultar Categoría</a></li>
             </ul>
         </li>
         <li class="dropdown">

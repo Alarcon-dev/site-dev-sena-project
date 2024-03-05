@@ -3,6 +3,7 @@
     @if ($users && $users->count() > 0)
         <div class="col-lg-12 col-md-12 col-12 col-sm-12" style="margin-top: 8%;">
             <div class="card">
+                @include('includes.alerts')
                 <div class="card-header">
                     <h4>Lista de usuarios</h4>
                     <div class="card-header-action">

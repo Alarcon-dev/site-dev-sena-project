@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Publication;
 use App\Models\User;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
@@ -108,7 +109,13 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::where('id_user', $id)->delete();
+
+        if ($user) {
+            return back()->with('success', 'userio eliminado');
+        } else {
+            return back()->with('wrong', 'userio eliminado');
+        }
     }
 
     public function getAllusers()
