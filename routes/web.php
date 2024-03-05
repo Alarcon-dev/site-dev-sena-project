@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -40,4 +41,9 @@ Route::controller(CategoryController::class)->group(function () {
     Route::get('/edit/categories/{id_category}', 'edit');
     Route::post('/update/categorie/{id_categorie}', 'update');
     Route::get('/delete/categories/{id_category}', 'destroy');
+});
+
+
+Route::controller(PublicationController::class)->group(function () {
+    Route::get('/publication/create', 'create')->name('publication.create');
 });

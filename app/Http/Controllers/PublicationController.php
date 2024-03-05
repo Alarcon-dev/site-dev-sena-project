@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PublicationController extends Controller
 {
@@ -19,7 +21,8 @@ class PublicationController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('publications.create_publication', compact('categories'));
     }
 
     /**
@@ -27,7 +30,12 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'cate_public_id' => ['string', 'max:255', 'alpha'],
+            'public_title' => ['string', 'max:255', 'alpha'],
+            'public_content' => ['string', 'max:255'],
+            'public_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+        ]);
     }
 
     /**
