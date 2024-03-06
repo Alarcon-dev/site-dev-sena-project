@@ -24,7 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $publications = Publication::all();
-        return view('home', compact('publications'));
+        $publications = Publication::orderBy('id_publication', 'desc')->get();
+        return view('home', [
+            'publications' => $publications
+        ]);
     }
 }

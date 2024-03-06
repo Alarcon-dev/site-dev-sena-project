@@ -116,4 +116,11 @@ class PublicationController extends Controller
 
         return Response($publication_profile, 200);
     }
+
+    public function getAllPublications()
+    {
+        $publications = Publication::all();
+
+        return $publications;
+    }
 }
