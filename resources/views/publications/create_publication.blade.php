@@ -44,17 +44,51 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="form-group row mb-4">
+                                <div class="form-group row mb-4 editor">
                                     <label for="name"
                                         class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Content</label>
                                     <div class="col-sm-12 col-md-8">
-                                        <textarea class="summernote-simple @error('public_content') is-invalid @enderror" name="public_content"></textarea>
+                                        <textarea id="myTextarea" class="shadow @error('public_content') is-invalid @enderror" name="public_content"></textarea>
                                         @error('public_content')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
+                                    <script>
+                                        var editor = CodeMirror.fromTextArea(document.getElementById('myTextarea'), {
+                                            lineNumbers: true, // activar números de línea
+                                            mode: 'javascript', // modo de lenguaje
+                                            extraKeys: {
+                                                "Ctrl-Space": "autocomplete"
+                                            }, // activar autocompletado (opcional)
+                                            autoCloseBrackets: true, // cerrar automáticamente corchetes (opcional)
+                                            indentUnit: 4 // establecer la unidad de indentación (opcional)
+                                        });
+
+                                        editor.on("beforeChange", function(instance, changeObj) {
+                                            // Obtener la posición del cursor
+                                            var cursorPos = editor.getCursor();
+                                            // Si se está pegando texto y no es una sola línea
+                                            if (changeObj.origin == "paste" && changeObj.text.length > 1) {
+                                                // Obtener el texto pegado
+                                                var pastedText = changeObj.text.join("\n");
+                                                // Aplicar indentación al texto pegado
+                                                var indentedText = editor.options.indentWithTabs ? pastedText.replace(/^\t*/mg, "") : pastedText
+                                                    .replace(new RegExp("^" + " ".repeat(editor.options.indentUnit), "mg"), "");
+                                                // Actualizar el texto en el editor con la indentación aplicada
+                                                instance.replaceRange(indentedText, {
+                                                    line: cursorPos.line,
+                                                    ch: 0
+                                                }, {
+                                                    line: cursorPos.line,
+                                                    ch: 0
+                                                }, "+input");
+                                                // Cancelar el cambio predeterminado
+                                                changeObj.cancel();
+                                            }
+                                        });
+                                    </script>
                                 </div>
                                 <div class="form-group row mb-4">
                                     <label for="public_image"

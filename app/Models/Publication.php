@@ -44,4 +44,10 @@ class Publication extends Model
     {
         return $this->belongsTo(Comment::class, 'public_comment_id');
     }
+
+    public static function getAll()
+    {
+        $publications = Publication::orderBy('id_publication', 'desc')->get();
+        return $publications;
+    }
 }
