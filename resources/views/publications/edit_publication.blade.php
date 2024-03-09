@@ -97,12 +97,14 @@
                                     <div class="form-group row mb-4 mt-3">
                                         <label for="public_image"
                                             class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Imagen</label>
-                                        <div class="col-sm-6 col-md-4">
-                                            @if ($publication->public_image)
+                                        @if ($publication->public_image)
+                                            <div class="col-sm-6 col-md-4">
+
                                                 <img src="/publication/image/{{ $publication->public_image }}"
                                                     alt="">
-                                            @endif
-                                        </div>
+
+                                            </div>
+                                        @endif
                                         <div class="col-sm-6 col-md-4">
                                             <div id="image-preview" class="image-preview">
 
