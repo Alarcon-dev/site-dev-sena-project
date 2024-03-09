@@ -1,4 +1,4 @@
-<div class="container" style="margin-right: -70%;">
+<div class="container" style="margin-right: -65%;">
     @include('includes.user_profile')
 </div>
 <li class="dropdown"><a href="#" data-toggle="dropdown"

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Publication;
 use App\Models\User;
 use GuzzleHttp\Psr7\Response;
@@ -109,9 +110,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        $comment = Comment::where('user_comment_id', $id)->delete();
+        $publication = Publication::where('user_public_id', $id)->delete();
         $user = User::where('id_user', $id)->delete();
 
-        if ($user) {
+        if ($user && $publication && $comment) {
             return back()->with('success', 'userio eliminado');
         } else {
             return back()->with('wrong', 'userio eliminado');

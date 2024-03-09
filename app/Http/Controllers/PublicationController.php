@@ -84,7 +84,9 @@ class PublicationController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $publication = Publication::find($id);
+        $categories = Category::all();
+        return view('publications.edit_publication', compact('publication'), compact('categories'));
     }
 
     /**

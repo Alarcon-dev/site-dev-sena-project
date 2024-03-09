@@ -9,7 +9,7 @@
             @foreach ($publications as $publication)
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-6 col-lg-10">
-                        <div class="card card-publication mb-3 shadow" style="margin-top: 8%">
+                        <div class="card card-publication mb-3 shadow" style="margin-top: 3%">
                             <div class="card-header">
                                 <div class="col_md_6">
                                     @if ($publication->User->user_image)
@@ -54,19 +54,19 @@
                                         <div class="code">{!! highlight_string($publication->public_content, true) !!}</div>
                                     </div>
                                 </a>
-                                <div class="row">
+
+                                <div class="row mt-3">
                                     <div class="col-md-4 justify-content-start">
                                         <span
                                             class="mr-3"><strong>Comentarios({{ count($publication->comments) }})</strong></span>
                                     </div>
-
                                     @if (Auth::user()->id_user === $publication->user_public_id)
                                         <div class="col-md-8 d-flex justify-content-end">
                                             <a href="" class="btn btn-danger btn-action mr-3" data-toggle="tooltip"
                                                 title="Eliminar">
                                                 <i class="fas fa-trash"></i></a>
-                                            <a href="" class="btn btn-success btn-action" data-toggle="tooltip"
-                                                title="Ver">
+                                            <a href="/edit/publication/{{ $publication->id_publication }}"
+                                                class="btn btn-success btn-action" data-toggle="tooltip" title="Editar">
                                                 <i class="fas fa-edit"></i></a>
                                         </div>
                                     @endif
@@ -78,9 +78,9 @@
             @endforeach
         @else
             <div class="row justify-content-center" style="margin-top: 15%">
-                <div class="col-md-6">
-                    <div class="card-body justify-content-center">
-                        <h1 class="text-align-center" style="margin: auto 30%">Bienvenido</h1>
+                <div class="container">
+                    <div class="col-md-3">
+                        <h1 class="text-align-center" style="margin: 35% 50vh">Bienvenido</h1>
                     </div>
                 </div>
             </div>
