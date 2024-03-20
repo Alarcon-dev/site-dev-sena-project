@@ -1,6 +1,7 @@
 <footer class="main-footer">
     <div class="footer-left">
         Copyright &copy; 2018 <div class="bullet"></div> Desarrollado por <a href="https://nauval.in/">Steven Alarcon</a>
+        & <a href="https://nauval.in/">Angie Salazar</a>
     </div>
     <div class="footer-right">
 

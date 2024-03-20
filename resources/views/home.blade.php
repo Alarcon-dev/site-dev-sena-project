@@ -10,7 +10,7 @@
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-6 col-lg-10">
                         <div class="card card-publication mb-3 shadow" style="margin-top: 3%">
-                            <div class="card-header">
+                            <div class="card-header mt-3 mb-3">
                                 <div class="col_md_6">
                                     @if ($publication->User->user_image)
                                         <div class="profile_publication float-left">
