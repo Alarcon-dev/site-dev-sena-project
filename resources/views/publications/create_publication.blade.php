@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('content')
     <section class="section" style="margin-top: 8%;">
+        @include('includes.alerts')
         <div class="section-body">
             <h2 class="section-title">Crear nueva publicación</h2>
             <div class="row">
@@ -91,33 +92,59 @@
                                     </script>
                                 </div>
                                 <div class="form-group row mb-4">
-                                    <label for="public_image"
-                                        class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Imagen</label>
-                                    <div class="col-sm-12 col-md-7">
-                                        <div id="image-preview" class="image-preview">
-                                            <label for="public_image" id="image-label">Cargar archivo</label>
-                                            <input class="@error('public_image') is-invalid @enderror" type="file"
-                                                name="public_image" id="image-upload" />
-                                            @error('public_image')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                    <label for="files"
+                                        class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Cargar
+                                        Imágenes</label>
+                                    <div class="col-sm-12 col-md-8">
+                                        <div class="border p-3">
+                                            <label for="files" class="btn btn-light btn-block mb-3">
+                                                <i class="fas fa-upload mr-2"></i>Seleccionar imágenes
+                                            </label>
+                                            <input type="file" id="files" name="public_image[]" accept="image/*"
+                                                multiple style="display: none;">
+                                            <div id="imagePreview"></div>
                                         </div>
+                                    </div>
+                                </div>
 
-                                    </div>
-                                </div>
-                                <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                                    <div class="col-sm-12 col-md-7">
-                                        <input type="submit" class="btn btn-primary" value="Publicar">
-                                    </div>
-                                </div>
-                            </form>
+                                <script>
+                                    document.getElementById('files').addEventListener('change', function() {
+                                        var imagePreview = document.getElementById('imagePreview');
+
+                                        for (var i = 0; i < this.files.length; i++) {
+                                            var file = this.files[i];
+
+                                            // Verificar si el archivo es una imagen
+                                            if (!file.type.startsWith('image/')) {
+                                                continue;
+                                            }
+
+                                            var reader = new FileReader();
+                                            reader.onload = function(e) {
+                                                var img = document.createElement('img');
+                                                img.src = e.target.result;
+                                                img.classList.add('img-thumbnail', 'mr-2', 'mb-2');
+                                                img.style.maxWidth = '150px'; // Ajustar el tamaño máximo de la imagen
+                                                imagePreview.appendChild(img);
+                                            };
+                                            reader.readAsDataURL(file);
+                                        }
+                                    });
+                                </script>
+
                         </div>
+
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                            <div class="col-sm-12 col-md-7">
+                                <input type="submit" class="btn btn-primary" value="Publicar">
+                            </div>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 @endsection

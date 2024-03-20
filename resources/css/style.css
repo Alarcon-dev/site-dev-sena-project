@@ -3,8 +3,6 @@
     width: 75px;
     height: 75px;
     overflow: hidden;
-   
-
 }
 
 .user_profile img{
@@ -35,15 +33,13 @@
 
 .upload_file_update img{
     height: 90%;
-    width: 85%;
-   
+    width: 85%;  
 }
 
 
 .profile_show img{
     height: 95%;
     width: 90%;
- 
 }
 
 /* configuracion de vista para imagenes de publicaciones*/

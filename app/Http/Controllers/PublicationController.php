@@ -39,12 +39,13 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
+
         $user = Auth::user();
         $request->validate([
             'cate_public_id' => ['string', 'max:255'],
             'public_title' => ['string', 'max:255'],
             'public_content' => ['string', 'max:5000'],
-            'public_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+            'public_image.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
         ]);
 
         $publication = Publication::create([
@@ -54,15 +55,19 @@ class PublicationController extends Controller
             'public_content' => $request->public_content,
         ]);
 
-        if (!empty($request->public_image) && $request->public_image->isValid()) {
-            $image = $request->public_image;
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            Storage::disk('publications')->put($imageName, file_get_contents($image));
 
-            $publication->public_image = $imageName;
+        if ($request->hasFile('public_image')) {
+            foreach ($request->file('public_image') as $image) {
+                if ($image->isValid()) {
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    Storage::disk('publications')->put($imageName, file_get_contents($image));
 
-            $publication->save();
+                    $publication->public_image = $imageName;
+                    $publication->save();
+                }
+            }
         }
+
 
         if ($publication) {
             return redirect()->route('home')->with('success', 'se a agregado una nueva publicación');
