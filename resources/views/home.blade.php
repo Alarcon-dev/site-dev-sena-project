@@ -39,63 +39,88 @@
 
                             <div class="card-body">
                                 @if ($publication->public_image !== null)
+                                    @php
+                                        $imageNames = json_decode($publication->public_image);
+
+                                    @endphp
+
                                     <div class="container p_img_container">
                                         <div class="row justify-content-center">
-                                            <a href="">
-                                                <img src="/publication/image/{{ $publication->public_image }}"
-                                                    alt="">
-                                            </a>
+
+                                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+
+                                                <div class="carousel-inner">
+                                                    @foreach ($imageNames as $index => $imageName)
+                                                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                                            <img src="/publication/image/{{ $imageName }}"
+                                                                alt="Image">
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+
+                                                <a class="carousel-control-prev" href="#carouselExampleControls"
+                                                    role="button" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#carouselExampleControls"
+                                                    role="button" data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </div>
+
 
                                         </div>
+
                                     </div>
-                                @endif
-                                <a href="" class="text-decoration-none">
-                                    <div class="code-container">
-                                        <div class="code">{!! highlight_string($publication->public_content, true) !!}</div>
-                                    </div>
-                                </a>
-                                <div class="sticky-bottom">
-                                    <div class="row mt-5">
-                                        <div class="col-md-4 justify-content-start">
-                                            <span
-                                                class="mr-3"><strong>Comentarios({{ count($publication->comments) }})</strong></span>
-                                        </div>
-                                        @if (Auth::user()->id_user === $publication->user_public_id)
-                                            <div class="col-md-8 d-flex justify-content-end">
-                                                <a href="" class="btn btn-danger btn-action mr-3"
-                                                    data-toggle="tooltip" title="Eliminar">
-                                                    <i class="fas fa-trash"></i></a>
-                                                <a href="/edit/publication/{{ $publication->id_publication }}"
-                                                    class="btn btn-success btn-action" data-toggle="tooltip" title="Editar">
-                                                    <i class="fas fa-edit"></i></a>
-                                            </div>
-                                        @endif
-                                        @role('admin')
-                                            <div class="sticky-bottom">
-                                                <div class="row" style="margin-top: -4%; margin-bottom: 3%">
-                                                    <div class="col-md-12 d-flex justify-content-end">
-                                                        <a href="" class="btn btn-danger btn-action mr-3"
-                                                            data-toggle="tooltip" title="Eliminar">
-                                                            <i class="fas fa-trash"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endrole
-                                    </div>
+                            </div>
+            @endif
+            <a href="" class="text-decoration-none p-3">
+                <div class="code-container">
+                    <div class="code">{!! highlight_string($publication->public_content, true) !!}</div>
+                </div>
+            </a>
+            <div class="sticky-bottom" style="padding: 2% 5%">
+                <div class="row mt-5">
+                    <div class="col-md-4 justify-content-start">
+                        <span class="mr-3"><strong>Comentarios({{ count($publication->comments) }})</strong></span>
+                    </div>
+                    @if (Auth::user()->id_user === $publication->user_public_id)
+                        <div class="col-md-8 d-flex justify-content-end">
+                            <a href="" class="btn btn-danger btn-action mr-3" data-toggle="tooltip" title="Eliminar">
+                                <i class="fas fa-trash"></i></a>
+                            <a href="/edit/publication/{{ $publication->id_publication }}"
+                                class="btn btn-success btn-action" data-toggle="tooltip" title="Editar">
+                                <i class="fas fa-edit"></i></a>
+                        </div>
+                    @endif
+                    @role('admin')
+                        <div class="sticky-bottom">
+                            <div class="row" style="margin-top: -4%; margin-bottom: 3%">
+                                <div class="col-md-12 d-flex justify-content-end">
+                                    <a href="" class="btn btn-danger btn-action mr-3" data-toggle="tooltip"
+                                        title="Eliminar">
+                                        <i class="fas fa-trash"></i></a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            @endforeach
-        @else
-            <div class="row justify-content-center" style="margin-top: 15%">
-                <div class="container">
-                    <div class="col-md-3">
-                        <h1 class="text-align-center" style="margin: 35% 50vh">Bienvenido</h1>
-                    </div>
+                    @endrole
                 </div>
             </div>
-        @endif
+    </div>
+    </div>
+    </div>
+    </div>
+    @endforeach
+@else
+    <div class="row justify-content-center" style="margin-top: 15%">
+        <div class="container">
+            <div class="col-md-3">
+                <h1 class="text-align-center" style="margin: 35% 50vh">Bienvenido</h1>
+            </div>
+        </div>
+    </div>
+    @endif
     </div>
 @endsection

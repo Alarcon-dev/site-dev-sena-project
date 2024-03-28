@@ -48,26 +48,29 @@ class PublicationController extends Controller
             'public_image.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
         ]);
 
-        $publication = Publication::create([
-            'user_public_id' => (int)$user->id_user,
-            'cate_public_id' => (int)$request->cate_public_id,
-            'public_title' => $request->public_title,
-            'public_content' => $request->public_content,
-        ]);
+        $publication = new Publication();
+        $publication->user_public_id  = (int)$user->id_user;
+        $publication->cate_public_id  = (int)$request->cate_public_id;
+        $publication->public_title  = $request->public_title;
+        $publication->public_content  = $request->public_content;
+
+
 
 
         if ($request->hasFile('public_image')) {
+
             foreach ($request->file('public_image') as $image) {
                 if ($image->isValid()) {
                     $imageName = time() . '_' . $image->getClientOriginalName();
                     Storage::disk('publications')->put($imageName, file_get_contents($image));
 
-                    $publication->public_image = $imageName;
-                    $publication->save();
+                    $imageNames[] = $imageName;
                 }
             }
         }
 
+        $publication->public_image = json_encode($imageNames);
+        $publication->save();
 
         if ($publication) {
             return redirect()->route('home')->with('success', 'se a agregado una nueva publicación');
@@ -99,7 +102,48 @@ class PublicationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = Auth::user();
+        $request->validate([
+            'cate_public_id' => ['string', 'max:255'],
+            'public_title' => ['string', 'max:255'],
+            'public_content' => ['string', 'max:5000'],
+            'public_image.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+        ]);
+
+        $update_publication = Publication::where('id_publication', $id)->update([
+            'cate_public_id' => $request->cate_public_id,
+            'public_title' => $request->public_title,
+            'public_content' => $request->public_content,
+        ]);
+
+
+        if ($request->hasFile('public_image')) {
+
+
+
+            foreach ($request->file('public_image') as $image) {
+                if ($image) {
+                    Storage::disk('user_profile')->delete($image);
+                }
+
+                if ($image->isValid()) {
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    Storage::disk('publications')->put($imageName, file_get_contents($image));
+
+                    $imageNames[] = $imageName;
+                }
+            }
+
+            $update_publication = Publication::where('id_publication', $id)->update([
+                'public_image' => $imageNames
+            ]);
+        }
+
+        if ($update_publication) {
+            return redirect()->route('home')->with('success', 'Publicación actualizada');
+        } else {
+            return back()->with('wrong', 'error al actualizar la publicación');
+        }
     }
 
     /**

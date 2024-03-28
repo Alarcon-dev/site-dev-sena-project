@@ -11,7 +11,8 @@
                                 <h4>!!edita tu publicación!!</h4>
                             </div>
                             <div class="card-body">
-                                <form action="/save/publication" method="POST" enctype="multipart/form-data">
+                                <form action="/update/publication/{{ $publication->id_publication }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row mb-4">
                                         <label for="public_title"
@@ -95,30 +96,57 @@
                                         </script>
                                     </div>
                                     <div class="form-group row mb-4 mt-3">
-                                        <label for="public_image"
-                                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Imagen</label>
-                                        @if ($publication->public_image)
-                                            <div class="col-sm-6 col-md-4">
+                                        <div class="form-group row mb-4">
+                                            <label for="files"
+                                                class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Cargar
+                                                Imágenes</label>
+                                            <div class="col-sm-12 col-md-8">
+                                                <div class="border p-3">
+                                                    <label for="files" class="btn btn-light btn-block mb-3">
+                                                        <i class="fas fa-upload mr-2"></i>Seleccionar imágenes
+                                                    </label>
+                                                    <input type="file" id="files" name="public_image[]"
+                                                        accept="image/*" multiple style="display: none;">
+                                                    <div id="imagePreview">
+                                                        @if ($publication->public_image !== null)
+                                                            @php
+                                                                $imageNames = json_decode($publication->public_image);
+                                                            @endphp
+                                                            @foreach ($imageNames as $imageName)
+                                                                <img src="/publication/image/{{ $imageName }}"
+                                                                    alt="Image">
+                                                            @endforeach
+                                                        @endif
 
-                                                <img src="/publication/image/{{ $publication->public_image }}"
-                                                    alt="">
-
+                                                    </div>
+                                                </div>
                                             </div>
-                                        @endif
-                                        <div class="col-sm-6 col-md-4">
-                                            <div id="image-preview" class="image-preview">
-
-                                                <label for="public_image" id="image-label">Cargar archivo</label>
-                                                <input class="@error('public_image') is-invalid @enderror" type="file"
-                                                    name="public_image" id="image-upload" />
-                                                @error('public_image')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-
                                         </div>
+
+                                        <script>
+                                            document.getElementById('files').addEventListener('change', function() {
+                                                var imagePreview = document.getElementById('imagePreview');
+
+                                                for (var i = 0; i < this.files.length; i++) {
+                                                    var file = this.files[i];
+
+                                                    // Verificar si el archivo es una imagen
+                                                    if (!file.type.startsWith('image/')) {
+                                                        continue;
+                                                    }
+
+                                                    var reader = new FileReader();
+                                                    reader.onload = function(e) {
+                                                        var img = document.createElement('img');
+                                                        img.src = e.target.result;
+                                                        img.classList.add('img-thumbnail', 'mr-2', 'mb-2');
+                                                        img.style.maxWidth = '150px'; // Ajustar el tamaño máximo de la imagen
+                                                        imagePreview.appendChild(img);
+                                                    };
+                                                    reader.readAsDataURL(file);
+                                                }
+                                            });
+                                        </script>
 
                                     </div>
                                     <div class="form-group row mb-4">

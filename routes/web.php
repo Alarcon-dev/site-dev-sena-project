@@ -50,4 +50,5 @@ Route::controller(PublicationController::class)->group(function () {
     Route::get('/publication/image/{image_name?}', 'getPublicationImage');
     Route::get('/publication/profile/{image_name?}', 'getPublicationProfile');
     Route::get('/edit/publication/{id_publication}', 'edit');
+    Route::post('/update/publication/{id_publication}', 'update');
 });
