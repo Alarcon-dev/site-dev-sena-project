@@ -12,7 +12,7 @@
             <ul class="dropdown-menu">
                 <li class=active><a class="nav-link" href="{{ route('publication.create') }}">crear publicaciones</a>
                 </li>
-                <li><a class="nav-link" href="index.html">Mis publicaciones</a></li>
+                <li><a class="nav-link" href="/show/publication/{{ Auth::user()->id_user }}">Mis publicaciones</a></li>
             </ul>
         </li>
         <li class="menu-header">Starter</li>

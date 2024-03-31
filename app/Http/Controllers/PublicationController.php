@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Publication;
+use App\Models\Comment;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -84,7 +85,10 @@ class PublicationController extends Controller
      */
     public function show(string $id)
     {
-        //
+
+        $publications = Publication::where('user_public_id', $id)->get();
+
+        return view('publications.PublicationsByUser', compact('publications'));
     }
 
     /**
@@ -151,7 +155,14 @@ class PublicationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $comment = Comment::where('public_comment_id', $id)->delete();
+        $publication = Publication::where('id_publication', $id)->delete();
+
+        if ($publication) {
+            return back()->with('success', 'Publicación eliminada');
+        } else {
+            return back()->with('wrong', 'Error al eliminar publicación');
+        }
     }
 
     public function getPublicationImage($image_name)
@@ -173,5 +184,12 @@ class PublicationController extends Controller
         $publications = Publication::all();
 
         return $publications;
+    }
+
+    public function getPublicationsByDate()
+    {
+        $publications = Publication::OrderBy('created_at', 'desc')->get();
+
+        return view('publications.list', compact('publications'));
     }
 }

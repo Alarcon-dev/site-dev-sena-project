@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('content')
     <div class="section">
+
         @php
             $publications = App\Models\Publication::getAll();
         @endphp
@@ -76,7 +77,6 @@
                                     </div>
                                 @endif
                             </div>
-
                             <a href="" class="text-decoration-none p-3">
                                 <div class="code-container">
                                     <div class="code">{!! highlight_string($publication->public_content, true) !!}</div>
@@ -103,7 +103,7 @@
                                         <div class="sticky-bottom">
                                             <div class="row" style="margin-top: -4%; margin-bottom: 3%">
                                                 <div class="col-md-12 d-flex justify-content-end">
-                                                    <a href="/publication/destroy/{{ $publication->id_publication }}"
+                                                    <a href="/publication/destroy/{{ $publication->id_publication }}else"
                                                         class="btn btn-danger btn-action mr-3" data-toggle="tooltip"
                                                         title="Eliminar">
                                                         <i class="fas fa-trash"></i></a>
@@ -116,12 +116,10 @@
                         </div>
             @endforeach
         @else
-            <div class="section">s
-                <div class="row justify-content-center" style="margin-top: 3%">
-                    <div class="container">
-                        <div class="col-md-12">
-                            <h1 class="text-align-center" style="margin: 20% 50vh">Bienvenido</h1>
-                        </div>
+            <div class="row justify-content-center" style="margin-top: 3%">
+                <div class="container">
+                    <div class="col-md-12">
+                        <h1 class="text-align-center" style="margin: 20% 50vh">No hay publicaciones</h1>
                     </div>
                 </div>
             </div>

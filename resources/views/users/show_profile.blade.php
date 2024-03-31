@@ -24,8 +24,8 @@
                 </div>
 
                 <div class="col-md-12  mt-5">
-                    <a href="#" class="btn btn-danger btn-icon icon-right">Ver publicaciones <i
-                            class="fas fa-chevron-right"></i></a>
+                    <a href="/show/publication/{{ $user->id_user }}" class="btn btn-danger btn-icon icon-right">Ver
+                        publicaciones <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </div>

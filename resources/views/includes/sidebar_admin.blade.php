@@ -11,7 +11,7 @@
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Gestionar usuarios</span></a>
             <ul class="dropdown-menu">
                 <li class=active><a class="nav-link" href="{{ route('all.users') }}">Consultar usuarios</a></li>
-                <li><a class="nav-link" href="index.html">Consultar publicaciones</a></li>
+                <li><a class="nav-link" href="/publication/list">Consultar publicaciones</a></li>
             </ul>
         </li>
         <li class="menu-header">Starter</li>
