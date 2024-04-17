@@ -27,7 +27,7 @@
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i>
                 <span>Gestionar Recursos</span></a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="bootstrap-alert.html">Crear recurso</a></li>
+                <li><a class="nav-link" href="/index/resources">Crear recurso</a></li>
                 <li><a class="nav-link" href="bootstrap-badge.html">Consultar recursos</a></li>
                 <li><a class="nav-link" href="bootstrap-badge.html">Librería</a></li>
             </ul>
