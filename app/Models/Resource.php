@@ -11,6 +11,17 @@ class Resource extends Model
 
     protected $table = 'resources';
 
+    protected $fillable = [
+        'user_resource_id ',
+        'cate_resource_id ',
+        'resource_title',
+        'resource_author',
+        'resource_edition',
+        'resource_image',
+        'resource_file',
+        'resource_description',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_resource_id');
