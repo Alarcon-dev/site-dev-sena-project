@@ -15,14 +15,23 @@
                 <li><a class="nav-link" href="/show/publication/{{ Auth::user()->id_user }}">Mis publicaciones</a></li>
             </ul>
         </li>
-        <li class="menu-header">Starter</li>
+        <li class="menu-header">Biblioteca</li>
+        @php
+            $categories = App\Models\Resource::getAll();
+
+        @endphp
         <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
-                <span>Layout</span></a>
+                <span>Recursos</span></a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="layout-default.html">Default Layout</a></li>
-                <li><a class="nav-link" href="layout-transparent.html">Transparent Sidebar</a></li>
-                <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
+                @if ($categories && $categories->count() > 0)
+                    @foreach ($categories as $categorie)
+                        <li class=active><a class="nav-link"
+                                href="/resources/library/{{ $categorie->id_categorie }}">{{ $categorie->categorie_name }}</a>
+                        </li>
+                    @endforeach
+
+                @endif
             </ul>
         </li>
         <li><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank
@@ -53,7 +62,7 @@
                 <li><a class="nav-link" href="bootstrap-typography.html">Typography</a></li>
             </ul>
         </li>
-        <li class="menu-header">Stisla</li>
+        <li class="menu-header">Biblioteca</li>
         <li class="dropdown">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i>
                 <span>Components</span></a>

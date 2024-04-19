@@ -113,4 +113,12 @@ class ResourceController extends Controller
     {
         //
     }
+
+    public function library($id_categorie)
+    {
+
+        $resource = Resource::where('cate_resource_id', $id_categorie)->get();
+
+        return view('library.library', compact('resource'));
+    }
 }

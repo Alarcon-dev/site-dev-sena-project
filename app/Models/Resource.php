@@ -9,6 +9,7 @@ class Resource extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id_resources';
     protected $table = 'resources';
 
     protected $fillable = [
@@ -30,5 +31,11 @@ class Resource extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'cate_resource_id');
+    }
+
+    public static function getAll()
+    {
+        $categories = Category::orderBy('id_categorie', 'desc')->get();
+        return $categories;
     }
 }
