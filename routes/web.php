@@ -61,5 +61,7 @@ Route::controller(PublicationController::class)->group(function () {
 Route::controller(ResourceController::class)->group(function () {
     Route::get('/index/resources', 'create');
     Route::post('/create/resource', 'store');
-    Route::get('resources/library/{id_categorie}', 'library');
+    Route::get('/resources/library/{id_categorie}', 'library');
+    Route::get('/resource/image/{image_name}', 'getResourceImage');
+    Route::get('/file/download/{folder}/{file_name?}', 'downloadFile');
 });

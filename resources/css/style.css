@@ -73,3 +73,16 @@
     overflow-x: scroll; 
     overflow-y: scroll;
 }
+
+/*Seccion para estilos de la funcionalidad resource*/
+
+.resource-image{
+    overflow: hidden;
+    max-height: 100%;
+    width: 100%;
+}
+
+.resource-image img{
+    height: 100%;
+    width: 100%;
+}

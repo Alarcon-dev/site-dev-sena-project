@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Resource;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Stmt\Return_;
 
 class ResourceController extends Controller
 {
@@ -30,7 +32,7 @@ class ResourceController extends Controller
         if ($cat->count() > 0) {
             $categories = $cat;
         }
-        return view('resources.index', compact('categories'));
+        return view('library.index', compact('categories'));
     }
 
     /**
@@ -116,9 +118,32 @@ class ResourceController extends Controller
 
     public function library($id_categorie)
     {
+        $resources = Resource::where('cate_resource_id', $id_categorie)->get();
+        return view('library.library', compact('resources'));
+    }
 
-        $resource = Resource::where('cate_resource_id', $id_categorie)->get();
 
-        return view('library.library', compact('resource'));
+    public function getResourceImage($image_name)
+    {
+        $imageResource = Storage::disk('image_resource')->get($image_name);
+        return Response($imageResource, 200);
+    }
+
+    public function downloadFile($folder, $file_name)
+    {
+        $path = $folder . '/' . $file_name;
+
+        if (!Storage::disk('file_resource')->exists($path)) {
+            abort(404);
+        }
+
+
+        $fullPath = Storage::disk('file_resource')->path($path);
+
+
+        return response()->file($fullPath, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $file_name . '"',
+        ]);
     }
 }
