@@ -19,7 +19,9 @@
                                     {!! Illuminate\Support\Str::limit($resource->resource_description, 150) !!}
                                     <b>Edición: </b>{{ $resource->resource_edition }}
                                 </div>
-                                <div class=" col-12 col-md-12 col-lg-12 btn btn-primary">Ver dedecripción</a></div>
+                                <div class="col-12 col-md-12 col-lg-12 text-center "><a class="btn btn-primary "
+                                        style="width: 95%"; href="/resource/detail/{{ $resource->id_resources }}">Ver
+                                        dedecripción</a></div>
                                 <div class="col-12 col-md-12 col-lg-12 mt-3 text-center">
                                     <a class="btn btn-primary"
                                         href="/file/download/{{ $resource->resource_file }}">Descargar recurso</a>

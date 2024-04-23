@@ -194,7 +194,7 @@ class ResourceController extends Controller
 
     public function library($id_categorie)
     {
-        $resources = Resource::where('cate_resource_id', $id_categorie)->get();
+        $resources = Resource::where('cate_resource_id', $id_categorie)->paginate(8);
         return view('library.library', compact('resources'));
     }
 

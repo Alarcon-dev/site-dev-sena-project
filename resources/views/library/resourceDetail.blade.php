@@ -16,7 +16,7 @@
                             <hr>
                             <div class="col-12 col-md-12 col-lg-12 mb-2">
                                 <b>Sipnópsis</b>
-                                {!! Illuminate\Support\Str::limit($resource->resource_description, 150) !!}
+                                {!! $resource->resource_description !!}
                                 <b>Edición: </b>{{ $resource->resource_edition }}
                             </div>
                             <div class=" col-12 col-md-12 col-lg-12 btn btn-primary">Ver dedecripción</a></div>
