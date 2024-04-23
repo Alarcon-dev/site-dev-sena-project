@@ -66,4 +66,7 @@ Route::controller(ResourceController::class)->group(function () {
     Route::get('/file/download/{folder}/{file_name?}', 'downloadFile');
     Route::get('/resource/edit/{id_resource}', 'edit');
     Route::post('/resource/update/{id_resource}', 'update');
+    Route::get('/resource/delete/{id_resource}', 'destroy');
+    Route::get('/resource/list', 'resourcesList');
+    Route::get('/resource/detail/{id_resource}', 'show');
 });

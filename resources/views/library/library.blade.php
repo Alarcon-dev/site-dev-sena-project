@@ -24,8 +24,8 @@
                                     <a class="btn btn-primary"
                                         href="/file/download/{{ $resource->resource_file }}">Descargar recurso</a>
                                     @role('admin')
-                                        <a href="" class="btn btn-danger btn-action mr-2 ml-2" data-toggle="tooltip"
-                                            title="Eliminar">
+                                        <a href="/resource/delete/{{ $resource->id_resources }}"
+                                            class="btn btn-danger btn-action mr-2 ml-2" data-toggle="tooltip" title="Eliminar">
                                             <i class="fas fa-trash"></i></a>
                                         <a href="/resource/edit/{{ $resource->id_resources }}"
                                             class="btn btn-success btn-action" data-toggle="tooltip" title="Editar">

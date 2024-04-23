@@ -28,7 +28,7 @@
                 <span>Gestionar Recursos</span></a>
             <ul class="dropdown-menu">
                 <li><a class="nav-link" href="/index/resources">Crear recurso</a></li>
-                <li><a class="nav-link" href="bootstrap-badge.html">Consultar recursos</a></li>
+                <li><a class="nav-link" href="/resource/list">Consultar recursos</a></li>
             </ul>
         </li>
         <li class="menu-header">Biblioteca</li>

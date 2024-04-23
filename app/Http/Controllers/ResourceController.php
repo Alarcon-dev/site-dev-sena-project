@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Exists;
-use PhpParser\Node\Stmt\Return_;
+use PhpParser\Node\Stmt\Return;
 
 class ResourceController extends Controller
 {
@@ -48,10 +48,10 @@ class ResourceController extends Controller
             'resource_title' => ['string', 'max:255'],
             'cate_resource_id' => ['string', 'max:255'],
             'resource_description' => ['string', 'max:5000'],
-            // 'resource_file' => ['file', 'max:2048', 'mimes:pdf'],
+            'resource_file' => ['file', 'max:20000', 'mimes:pdf'],
             'resource_author' => ['string', 'max:255'],
-            'resource_edition' => ['date', 'date_format:d-m-Y'],
-            // 'resource_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+            'resource_edition' => ['date', 'date_format:Y-m-d'],
+            'resource_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
         ]);
 
         $user = Auth::user();
@@ -92,7 +92,8 @@ class ResourceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $resource = Resource::find($id);
+        return view('library.resourceDetail', compact('resource'));
     }
 
     /**
@@ -116,13 +117,13 @@ class ResourceController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            // 'resource_title' => ['string', 'max:255'],
-            // 'cate_resource_id' => ['string', 'max:255'],
-            // 'resource_description' => ['string', 'max:5000'],
-            // // 'resource_file' => ['file', 'max:10000', 'mimes:pdf'],
-            // 'resource_author' => ['string', 'max:255'],
-            // 'resource_edition' => ['date', 'date_format:d-m-Y'],
-            // // 'resource_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+            'resource_title' => ['string', 'max:255'],
+            'cate_resource_id' => ['string', 'max:255'],
+            'resource_description' => ['string', 'max:5000'],
+            'resource_file' => ['file', 'max:20000', 'mimes:pdf'],
+            'resource_author' => ['string', 'max:255'],
+            'resource_edition' => ['date', 'date_format:Y-m-d'],
+            'resource_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
         ]);
 
         if ($request->resource_image) {
@@ -182,7 +183,13 @@ class ResourceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $delete = Resource::where('id_resources', $id)->delete();
+
+        if ($delete) {
+            return back()->with('success', 'Recurso Eliminado');
+        } else {
+            return back()->with('wrong', 'Error al eliminar recurso');
+        }
     }
 
     public function library($id_categorie)
@@ -200,19 +207,26 @@ class ResourceController extends Controller
 
     public function downloadFile($folder, $file_name)
     {
+
         $path = $folder . '/' . $file_name;
+
 
         if (!Storage::disk('file_resource')->exists($path)) {
             abort(404);
         }
 
-
         $fullPath = Storage::disk('file_resource')->path($path);
-
 
         return response()->file($fullPath, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="' . $file_name . '"',
         ]);
+    }
+
+    public function resourcesList()
+    {
+        $resources = Resource::all();
+
+        return view('library.resourceList', compact('resources'));
     }
 }
