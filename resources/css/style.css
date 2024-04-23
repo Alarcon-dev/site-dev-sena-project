@@ -76,13 +76,18 @@
 
 /*Seccion para estilos de la funcionalidad resource*/
 
+.card-resource{
+    height: 400px;
+}
 .resource-image{
     overflow: hidden;
-    max-height: 100%;
-    width: 100%;
+    width: 95%;
+    height: 400px;
 }
 
 .resource-image img{
     height: 100%;
     width: 100%;
+    -webkit-mask-image: linear-gradient(to bottom, crimson, black); /* Para navegadores WebKit */
+    mask-image: linear-gradient(to bottom, crimson, black); /* Para otros navegadores */
 }

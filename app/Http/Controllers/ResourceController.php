@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Exists;
 use PhpParser\Node\Stmt\Return_;
 
 class ResourceController extends Controller
@@ -40,18 +41,20 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
+
         $resource = new Resource();
 
         $request->validate([
             'resource_title' => ['string', 'max:255'],
             'cate_resource_id' => ['string', 'max:255'],
             'resource_description' => ['string', 'max:5000'],
-            'resource_file' => ['file', 'max:2048', 'mimes:pdf'],
+            // 'resource_file' => ['file', 'max:2048', 'mimes:pdf'],
             'resource_author' => ['string', 'max:255'],
-            'resource_edition' => ['date'],
-            'resource_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+            'resource_edition' => ['date', 'date_format:d-m-Y'],
+            // 'resource_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
         ]);
+
+        $user = Auth::user();
 
         if ($request->resource_image) {
             $image = $request->resource_image;
@@ -97,7 +100,12 @@ class ResourceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $cat = Category::all();
+        if ($cat->count() > 0) {
+            $categories = $cat;
+        }
+        $resource =  Resource::find($id);
+        return view('library.edit', compact('resource'), compact('categories'));
     }
 
     /**
@@ -105,7 +113,68 @@ class ResourceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = Auth::user();
+
+        $request->validate([
+            // 'resource_title' => ['string', 'max:255'],
+            // 'cate_resource_id' => ['string', 'max:255'],
+            // 'resource_description' => ['string', 'max:5000'],
+            // // 'resource_file' => ['file', 'max:10000', 'mimes:pdf'],
+            // 'resource_author' => ['string', 'max:255'],
+            // 'resource_edition' => ['date', 'date_format:d-m-Y'],
+            // // 'resource_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+        ]);
+
+        if ($request->resource_image) {
+            $image = $request->resource_image;
+            if (Storage::disk('image_resource')->exists($image)) {
+                Storage::disk('image_resource')->delete($image);
+            }
+            $image = $request->resource_image;
+            if ($image->isValid()) {
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                Storage::disk('image_resource')->put($imageName, file_get_contents($image));
+                Resource::where('id_resources', $id)->update([
+                    'resource_image' => $imageName
+                ]);
+            }
+        }
+
+
+        $part = explode('/', $request->file_name);
+
+        if ($request->file_name) {
+            $path = $part[0] . '/' . $part[1];
+            if (Storage::disk('file_resource')->exists($path)) {
+
+                Storage::disk('file_resource')->delete($path);
+            }
+        }
+
+        if ($request->hasFile('resource_file')) {
+            $file = $request->file('resource_file');
+            $filePath = $file->store('pdfs', 'file_resource');
+
+            Resource::where('id_resources', $id)->update([
+                'resource_file' => $filePath
+            ]);
+        }
+
+        $resource = Resource::where('id_resources', $id)->update([
+            'user_resource_id' => $user->id_user,
+            'resource_title' => $request->resource_title,
+            'cate_resource_id' => $request->cate_resource_id,
+            'resource_description' => $request->resource_description,
+            'resource_author' => $request->resource_author,
+            'resource_edition' => $request->resource_edition,
+        ]);
+
+
+        if ($resource) {
+            return back()->with('success', 'Recurso actualizado');
+        } else {
+            return back()->with('wrong', 'error al actualizar la recurso');
+        }
     }
 
     /**
