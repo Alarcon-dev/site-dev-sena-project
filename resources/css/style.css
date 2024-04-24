@@ -42,7 +42,7 @@
 }
 
 /* configuracion de vista para imagenes de publicaciones*/
-.p_img_container{
+/* .p_img_container{
     width: 95%;
     min-height: 370px;
     overflow: hidden;
@@ -53,7 +53,7 @@
     height: 370px;
     width: 90%;
     margin: auto 5%;
-}
+} */
 
 .profile_publication{
     height: 4rem;
