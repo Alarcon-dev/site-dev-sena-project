@@ -192,4 +192,11 @@ class PublicationController extends Controller
 
         return view('publications.list', compact('publications'));
     }
+
+    public function publicationDetail($id)
+    {
+        $publication = Publication::find($id);
+
+        return view('publications.publicationDetail', compact('publication'));
+    }
 }

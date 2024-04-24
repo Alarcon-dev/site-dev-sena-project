@@ -74,7 +74,8 @@
                                 @endif
                             </div>
 
-                            <a href="" class="text-decoration-none p-3">
+                            <a href="/publication/detail/{{ $publication->id_publication }}"
+                                class="text-decoration-none p-3">
                                 <div class="code-container">
                                     <div class="code">{!! highlight_string($publication->public_content, true) !!}</div>
                                 </div>
