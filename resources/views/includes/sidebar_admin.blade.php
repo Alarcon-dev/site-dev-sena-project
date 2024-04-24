@@ -27,9 +27,27 @@
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i>
                 <span>Gestionar Recursos</span></a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="bootstrap-alert.html">Crear recurso</a></li>
-                <li><a class="nav-link" href="bootstrap-badge.html">Consultar recursos</a></li>
-                <li><a class="nav-link" href="bootstrap-badge.html">Librería</a></li>
+                <li><a class="nav-link" href="/index/resources">Crear recurso</a></li>
+                <li><a class="nav-link" href="/resource/list">Consultar recursos</a></li>
+            </ul>
+        </li>
+        <li class="menu-header">Biblioteca</li>
+        @php
+            $categories = App\Models\Resource::getAll();
+
+        @endphp
+        <li class="dropdown">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+                <span>Recursos</span></a>
+            <ul class="dropdown-menu">
+                @if ($categories && $categories->count() > 0)
+                    @foreach ($categories as $categorie)
+                        <li class=active><a class="nav-link"
+                                href="/resources/library/{{ $categorie->id_categorie }}">{{ $categorie->categorie_name }}</a>
+                        </li>
+                    @endforeach
+
+                @endif
             </ul>
         </li>
         <li class="menu-header">Stisla</li>

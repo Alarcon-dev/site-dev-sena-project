@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PublicationController;
+use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -54,4 +55,18 @@ Route::controller(PublicationController::class)->group(function () {
     Route::get('/publication/destroy/{id_publication}', 'destroy');
     Route::get('/publication/list', 'getPublicationsByDate');
     Route::get('/show/publication/{id_user}', 'show');
+});
+
+
+Route::controller(ResourceController::class)->group(function () {
+    Route::get('/index/resources', 'create');
+    Route::post('/create/resource', 'store');
+    Route::get('/resources/library/{id_categorie}', 'library');
+    Route::get('/resource/image/{image_name}', 'getResourceImage');
+    Route::get('/file/download/{folder}/{file_name?}', 'downloadFile');
+    Route::get('/resource/edit/{id_resource}', 'edit');
+    Route::post('/resource/update/{id_resource}', 'update');
+    Route::get('/resource/delete/{id_resource}', 'destroy');
+    Route::get('/resource/list', 'resourcesList');
+    Route::get('/resource/detail/{id_resource}', 'show');
 });
