@@ -42,7 +42,7 @@
 }
 
 /* configuracion de vista para imagenes de publicaciones*/
-.p_img_container{
+/* .p_img_container{
     width: 95%;
     min-height: 370px;
     overflow: hidden;
@@ -53,7 +53,7 @@
     height: 370px;
     width: 90%;
     margin: auto 5%;
-}
+} */
 
 .profile_publication{
     height: 4rem;
@@ -88,6 +88,4 @@
 .resource-image img{
     height: 100%;
     width: 100%;
-    -webkit-mask-image: linear-gradient(to bottom, crimson, black); /* Para navegadores WebKit */
-    mask-image: linear-gradient(to bottom, crimson, black); /* Para otros navegadores */
 }
