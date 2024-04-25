@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 
+
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>Site dev &mdash; Project</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/style.css', 'resources/js/code.js'])
-    <!-- Code mirror js-->
-    <!-- Incluir CSS de CodeMirror -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/style.css', 'resources/js/sumernote.js'])
+
+    <link rel="stylesheet" href="{{ asset('backend/assets/modules/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/modules/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">
+    <script src="{{ asset('backend/assets/modules/jquery.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/stisla.js') }}"></script>
+
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
 
     <!-- Incluir JavaScript de CodeMirror -->
@@ -22,20 +31,14 @@
     <!-- Opcional: Incluir temas adicionales de CodeMirror -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/theme/monokai.min.css">
 
-    <!-- General CSS Files -->
-    <link rel="stylesheet" href="{{ asset('backend/assets/modules/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/modules/fontawesome/css/all.min.css') }}">
 
-    <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('backend/assets/modules/jqvmap/dist/jqvmap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons-wind.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">
+
     <!-- Start GA -->
+
+    <!-- /END GA -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -47,7 +50,6 @@
 
         gtag('config', 'UA-94034622-3');
     </script>
-    <!-- /END GA -->
 </head>
 
 <body>
