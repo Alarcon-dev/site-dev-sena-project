@@ -74,7 +74,6 @@
     overflow-y: scroll;
 }
 
-<<<<<<< HEAD
 /*Seccion para estilos de la funcionalidad resource*/
 
 .card-resource{
@@ -86,5 +85,7 @@
     height: 400px;
 }
 
-=====
->>>>>>> feature/gestion_de_publicaciones
+.resource-image img{
+    height: 100%;
+    width: 100%;
+}
