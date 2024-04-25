@@ -23,7 +23,6 @@ class PublicationController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**

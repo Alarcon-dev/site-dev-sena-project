@@ -24,7 +24,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $publications = Publication::orderBy('id_publication', 'desc')->get();
+        $data = Publication::orderBy('id_publication', 'desc')->paginate(4);
+
+        if ($data->count() > 0) {
+            $publications = $data;
+        } else {
+            $publications = false;
+        }
         return view('home', [
             'publications' => $publications
         ]);

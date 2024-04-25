@@ -3,11 +3,10 @@
     <div class="section">
         @if (Auth::user() !== null && $publication->count() > 0)
             @include('includes.alerts')
-
             <div class="row justify-content-center mt-3">
                 <div class="col-12 col-md-6 col-lg-12">
-                    <div class="card card-publication mb-3 shadow" style="margin-top: 3%">
-                        <div class="card-header mt-3 mb-3">
+                    <div class="card card-publication shadow" style="margin-top: 3%;">
+                        <div class="card-header" style="margin: 2% 3%">
                             <div class="col_md_6">
                                 @if ($publication->user->user_image)
                                     <div class="profile_publication float-left">
@@ -20,11 +19,11 @@
                                 @endif
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 ">
                                 <h4 class="card-title ml-3">{{ $publication->public_title }}</h4>
                                 <h4 class="card-title ml-3">
                                     publicado {{ $publication->created_at->locale('es')->diffForHumans() }}</h4>
-                                <h4 class="card-title ml-3">
+                                <h4 class="card-title ml-3 mb-3">
                                     Por:
                                     <a href="" class="text-decoration-none">
                                         {{ $publication->user->nick_name }}
@@ -67,58 +66,48 @@
                                     </div>
                                 </div>
                             @endif
+
                         </div>
-                        <div class="col-12 col-md-10 col-lg-12" style="margin-left: 3%">
-                            <a href="" class="text-decoration-none p-3">
+                        <div class="row">
+                            <div class="col-10 ml-5">
                                 <div class="code-container">
                                     <div class="code">{!! highlight_string($publication->public_content, true) !!}</div>
                                 </div>
-                            </a>
+                            </div>
                         </div>
-
-
-
                         <div class="line border-bottom" style="width: 95%; margin:auto"></div>
 
-                        <div class="sticky-bottom" style="padding: 2% 5%">
-                            <div class="row">
-                                @if (Auth::user()->id_user === $publication->user_public_id)
-                                    <div class="col-md-6 d-flex justify-content-start">
-                                        <a href="/edit/publication/{{ $publication->id_publication }}"
-                                            class="btn btn-success btn-action" data-toggle="tooltip" title="Editar">
-                                            <i class="fas fa-edit"></i></a>
-                                    </div>
-                                    <div class="col-md-6 d-flex justify-content-end">
-                                        <a href="/publication/destroy/{{ $publication->id_publication }}"
-                                            class="btn btn-danger btn-action mr-3" data-toggle="tooltip" title="Eliminar">
-                                            <i class="fas fa-trash"></i></a>
-                                    </div>
-                                @endif
-                                @role('admin')
-                                    <div class="sticky-bottom">
-                                        <div class="row" style="margin-top: -4%; margin-bottom: 3%">
-                                            <div class="col-md-12 d-flex justify-content-end">
-                                                <a href="/publication/destroy/{{ $publication->id_publication }}"
-                                                    class="btn btn-danger btn-action mr-3" data-toggle="tooltip"
-                                                    title="Eliminar">
-                                                    <i class="fas fa-trash"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endrole
+                        <div class="row justify-content-center" style="margin: 2% 13%">
+                            <!-- Centra los elementos horizontalmente -->
+                            <div class="col-6 co-md-3 mt-2">
+                                <h3 class="text-align-center">Añadir respuesta</h3>
                             </div>
+                            <form action="">
+                                <div class="form-group row mb-4 mt-3">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 mt-1">
+                                        <textarea class="summernote"></textarea>
+                                    </div>
+                                    <div class="col-6 text-align-end">
+                                        <input class="btn btn-primary" type="button" value="Comentar">
+                                    </div>
+                                </div>
+                            </form>
                         </div>
 
+
                     </div>
-                @else
-                    <div class="section">
-                        <div class="row justify-content-center" style="margin-top: 3%">
-                            <div class="container">
-                                <div class="col-md-12">
-                                    <h1 class="text-align-center" style="margin: 20% 50vh">Bienvenido</h1>
-                                </div>
+                    <div class="line border-bottom" style="width: 95%; margin:auto"></div>
+                </div>
+            @else
+                <div class="section">
+                    <div class="row justify-content-center" style="margin-top: 3%">
+                        <div class="container">
+                            <div class="col-md-12">
+                                <h1 class="text-align-center" style="margin: 20% 50vh">Bienvenido</h1>
                             </div>
                         </div>
                     </div>
+                </div>
         @endif
+
     @endsection

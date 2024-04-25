@@ -31,4 +31,9 @@ class Category extends Model
     {
         return $this->hasMany(Resource::class, 'cate_resource_id');
     }
+
+    public static function getAllCategories()
+    {
+        return Category::all();
+    }
 }
