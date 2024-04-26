@@ -31,14 +31,12 @@
                                 </h4>
                             </div>
                         </div>
-
                         <div class="card-body" style="height: 95%; width:95%">
                             @if ($publication->public_image !== null)
                                 @php
                                     $imageNames = json_decode($publication->public_image);
 
                                 @endphp
-
                                 <div class="container p_img_container">
                                     <div class="row justify-content-center">
 
@@ -66,7 +64,6 @@
                                     </div>
                                 </div>
                             @endif
-
                         </div>
                         <div class="row">
                             <div class="col-10 ml-5">
@@ -82,19 +79,19 @@
                             <div class="col-6 co-md-3 mt-2">
                                 <h3 class="text-align-center">Añadir respuesta</h3>
                             </div>
-                            <form action="">
+                            <form action="/comment/store" method="post" enctype="multipart/form-data">
+                                @csrf
                                 <div class="form-group row mb-4 mt-3">
+                                    <label for="comment_content"></label>
                                     <div class="col-sm-12 col-md-12 col-lg-12 mt-1">
-                                        <textarea class="summernote"></textarea>
+                                        <textarea name="comment_content" class="summernote"></textarea>
                                     </div>
                                     <div class="col-6 text-align-end">
-                                        <input class="btn btn-primary" type="button" value="Comentar">
+                                        <input class="btn btn-primary" type="submit" value="Comentar">
                                     </div>
                                 </div>
                             </form>
                         </div>
-
-
                     </div>
                     <div class="line border-bottom" style="width: 95%; margin:auto"></div>
                 </div>

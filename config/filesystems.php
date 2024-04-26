@@ -68,6 +68,14 @@ return [
             'throw' => false,
         ],
 
+        'comment_images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/comment_images'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'image_resource' => [
             'driver' => 'local',
             'root' => storage_path('app/image_resource'),

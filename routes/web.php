@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\UserController;
@@ -70,4 +71,8 @@ Route::controller(ResourceController::class)->group(function () {
     Route::get('/resource/delete/{id_resource}', 'destroy');
     Route::get('/resource/list', 'resourcesList');
     Route::get('/resource/detail/{id_resource}', 'show');
+});
+
+Route::controller(CommentController::class)->group(function () {
+    Route::post('/comment/store', 'store');
 });
