@@ -74,5 +74,5 @@ Route::controller(ResourceController::class)->group(function () {
 });
 
 Route::controller(CommentController::class)->group(function () {
-    Route::post('/comment/store', 'store');
+    Route::post('/comment/store/{id_publication}', 'store');
 });

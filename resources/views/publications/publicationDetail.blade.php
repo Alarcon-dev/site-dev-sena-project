@@ -79,7 +79,8 @@
                             <div class="col-6 co-md-3 mt-2">
                                 <h3 class="text-align-center">Añadir respuesta</h3>
                             </div>
-                            <form action="/comment/store" method="post" enctype="multipart/form-data">
+                            <form action="/comment/store/{{ $publication->id_publication }}" method="post"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group row mb-4 mt-3">
                                     <label for="comment_content"></label>
