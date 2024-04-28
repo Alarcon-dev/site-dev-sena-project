@@ -89,14 +89,11 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id_comment, $id_publication)
+    public function edit(string $id_comment)
     {
-        $commentEdit = Comment::find($id_comment);
-        $publication = Publication::find($id_publication);
+        $comment = Comment::find($id_comment);
 
-        dd($publication);
-
-        return view('publications.publicationDetail', compact('commentEdit', 'publication'));
+        return view('comments.commentEdit', compact('comment'));
     }
 
     /**

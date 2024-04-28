@@ -16,7 +16,6 @@
                     </label>
                     <div class="col-sm-12 col-md-8">
                         <textarea id="myTextarea" class="shadow @error('comment_content') is-invalid @enderror" name="comment_content">
-                            {{ isset($commentEdit) ? $commentEdit->comment_contet : '' }}
                         </textarea>
                         @error('comment_content')
                             <span class="invalid-feedback" role="alert">
@@ -70,7 +69,8 @@
                             </label>
                             <input type="file" id="files" name="comment_image[]" accept="image/*" multiple
                                 style="display: none;">
-                            <div id="imagePreview"></div>
+                            <div id="imagePreview">
+                            </div>
                         </div>
                     </div>
                 </div>

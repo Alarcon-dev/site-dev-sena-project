@@ -55,7 +55,7 @@
                                     <a href="/publication/destroy/{{ $comment->id_comment }}"
                                         class="btn btn-danger btn-action mr-3" data-toggle="tooltip" title="Eliminar">
                                         <i class="fas fa-trash"></i></a>
-                                    <a href="/comment/edit/{{ $comment->id_comment }}/{{ $publication->id_publication }}"
+                                    <a href="/comment/edit/{{ $comment->id_comment }}"
                                         class="btn btn-success btn-action" data-toggle="tooltip" title="Editar">
                                         <i class="fas fa-edit"></i></a>
                                 </div>
