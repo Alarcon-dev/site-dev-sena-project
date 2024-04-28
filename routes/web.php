@@ -77,4 +77,6 @@ Route::controller(ResourceController::class)->group(function () {
 
 Route::controller(CommentController::class)->group(function () {
     Route::post('/comment/store/{id_publication}', 'store');
+    Route::get('/comment/image/{image_path}', 'getImageComment');
+    Route::get('/comment/edit/{id_comment}/{id_publication}', 'edit');
 });

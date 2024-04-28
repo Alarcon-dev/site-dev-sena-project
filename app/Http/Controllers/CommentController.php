@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Publication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use DOMDocument;
+use GuzzleHttp\Psr7\Response;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 
 class CommentController extends Controller
@@ -87,9 +89,14 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id_comment, $id_publication)
     {
-        //
+        $commentEdit = Comment::find($id_comment);
+        $publication = Publication::find($id_publication);
+
+        dd($publication);
+
+        return view('publications.publicationDetail', compact('commentEdit', 'publication'));
     }
 
     /**
@@ -106,5 +113,12 @@ class CommentController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getImageComment($image_path)
+    {
+        $commentImage = Storage::disk('comment_images')->get($image_path);
+
+        return Response($commentImage, 200);
     }
 }
