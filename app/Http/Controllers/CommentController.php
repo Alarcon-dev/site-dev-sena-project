@@ -38,31 +38,32 @@ class CommentController extends Controller
     {
 
         $user = Auth::user();
-        $description = $request->comment_content;
 
-        $dom = new DOMDocument();
-        $dom->loadHTML($description, 9);
-
-        $images = $dom->getElementsByTagName('img');
-
-        foreach ($images as $key => $img) {
-            $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-            $image_name = "/upload/" . time() . $key . '.png';
-            // file_put_contents(public_path() . $image_name, $data);
-
-            Storage::disk('comment_images')->put($image_name, $data);
-
-            $img->removeAttribute('src');
-            $img->setAttribute('src', $image_name);
-        }
-        $description = $dom->saveHTML();
+        $request->validate([
+            'comment_content' => ['string', 'max:5000'],
+            'comment_image.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+        ]);
 
         $comment = Comment::create([
             'user_comment_id' => $user->id_user,
             'public_comment_id' => (int)$id,
-            'comment_content' => $description,
-
+            'comment_content' => $request->comment_content,
         ]);
+
+        if ($request->hasFile('comment_image')) {
+
+            foreach ($request->file('comment_image') as $image) {
+                if ($image->isValid()) {
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    Storage::disk('comment_images')->put($imageName, file_get_contents($image));
+
+                    $imageNames[] = $imageName;
+                }
+            }
+            $comment->comment_image = json_encode($imageNames);
+            $comment->save();
+        }
+
 
 
         if ($comment) {

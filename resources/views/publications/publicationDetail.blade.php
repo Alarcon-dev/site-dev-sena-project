@@ -74,23 +74,26 @@
                             </div>
                         </div>
                         <div class="line border-bottom" style="width: 95%; margin:auto"></div>
-
-                        <div class="row justify-content-center" style="margin: auto">
-                            <h4 class="text-align-center mt-3 mb-3">Añadir respuesta</h4>
-                        </div>
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center mt-3">
                             <div class="col-md-10">
                                 <div class="card-body shadow mb-3">
+                                    <div class="col-12 col-lg-12 justify-content-end mb-3">
+                                        <div class="d-flex justify-content-center">
+                                            <h4 class="bg-primary text-white pl-5 pr-5 pb-2 pt-2 rounded">Añadir respuesta
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="line border-bottom mb-2" style="width: 95%; margin:auto"></div>
                                     <form action="/comment/store/{{ $publication->id_publication }}" method="post"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group row mb-4 editor">
-                                            <label for="name"
+                                            <label for="comment_content"
                                                 class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Respuesta:
                                             </label>
                                             <div class="col-sm-12 col-md-8">
-                                                <textarea id="myTextarea" class="shadow @error('public_content') is-invalid @enderror" name="public_content"></textarea>
-                                                @error('public_content')
+                                                <textarea id="myTextarea" class="shadow @error('comment_content') is-invalid @enderror" name="comment_content"></textarea>
+                                                @error('comment_content')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -141,7 +144,7 @@
                                                     <label for="files" class="btn btn-light btn-block mb-3">
                                                         <i class="fas fa-upload mr-2"></i>Seleccionar imágenes
                                                     </label>
-                                                    <input type="file" id="files" name="public_image[]"
+                                                    <input type="file" id="files" name="comment_image[]"
                                                         accept="image/*" multiple style="display: none;">
                                                     <div id="imagePreview"></div>
                                                 </div>
@@ -171,7 +174,9 @@
                                                 }
                                             });
                                         </script>
-
+                                        <div class="form-group row mb-4">
+                                            <input class="btn btn-primary" type="submit" value="Comentar">
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -191,7 +196,7 @@
                                                 <div class="col-10 col-md-8">
                                                     {{-- <div class="code">{!! highlight_string($comment->comment_content, true) !!}</div> --}}
                                                     <p>
-                                                        {!! $comment->comment_content !!}
+                                                    <div class="code">{!! highlight_string($comment->comment_content, true) !!}</div>
                                                     </p>
                                                 </div>
                                             </div>
@@ -202,10 +207,10 @@
                             @endforeach
                         @else
                             <div class="section">
-                                <div class="row justify-content-center" style="margin-top: 3%">
+                                <div class="row justify-content-center" style="margin: 3% 28%">
                                     <div class="container">
                                         <div class="col-md-12">
-                                            <h1 class="text-align-center">No hay comentarios</h1>
+                                            <h3 class="text-align-center">No hay comentarios</h3>
                                         </div>
                                     </div>
                                 </div>
