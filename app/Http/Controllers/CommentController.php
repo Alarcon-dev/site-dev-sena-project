@@ -6,6 +6,8 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use DOMDocument;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 
 class CommentController extends Controller
 {
@@ -36,46 +38,37 @@ class CommentController extends Controller
     {
 
         $user = Auth::user();
-        $request->validate([
-            'comment_content' => 'required|string',
-        ]);
+        $description = $request->comment_content;
 
-        // Obtener el contenido del campo Summernote
-        $contenido = $request->input('comment_content');
+        $dom = new DOMDocument();
+        $dom->loadHTML($description, 9);
+
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $key => $img) {
+            $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
+            $image_name = "/upload/" . time() . $key . '.png';
+            // file_put_contents(public_path() . $image_name, $data);
+
+            Storage::disk('comment_images')->put($image_name, $data);
+
+            $img->removeAttribute('src');
+            $img->setAttribute('src', $image_name);
+        }
+        $description = $dom->saveHTML();
 
         $comment = Comment::create([
             'user_comment_id' => $user->id_user,
             'public_comment_id' => (int)$id,
-            'comment_content' => $contenido,
+            'comment_content' => $description,
+
         ]);
-        // Buscar todas las etiquetas de imagen en el contenido Summernote usando una expresión regular
-        preg_match_all('#src="data:image/(\w+);base64,([^"]*)"#', $contenido, $matches);
 
-        if (!empty($matches[0])) {
-
-            foreach ($matches[0] as $key => $match) {
-                // Decodificar los datos base64 de la imagen
-                $base64_img = $matches[2][$key];
-                $img_extension = $matches[1][$key];
-                $img_data = base64_decode($base64_img);
-
-
-                $nombreImagen = uniqid() . time() . '.' . $img_extension;
-
-
-                Storage::disk('comment_images')->put($nombreImagen, $img_data);
-
-                $comment->comment_image = $nombreImagen;
-                $comment->save();
-
-                $contenido = str_replace($match, 'src="' . Storage::disk('comment_images')->url($nombreImagen) . '"', $contenido);
-            }
-        }
 
         if ($comment) {
             return redirect()->back()->with('success', 'Comentario enviado correctamente.');
         } else {
-            return redirect()->back()->with('wrong', 'Error de envio de comentario.');
+            return redirect()->back()->with('wrong', 'Error al enviar el comentario.');
         }
     }
 

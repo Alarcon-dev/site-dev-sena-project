@@ -31,6 +31,8 @@ class HomeController extends Controller
         } else {
             $publications = false;
         }
+
+
         return view('home', [
             'publications' => $publications
         ]);

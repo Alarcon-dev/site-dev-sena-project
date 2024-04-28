@@ -65,8 +65,9 @@
                                 </div>
                             @endif
                         </div>
+
                         <div class="row">
-                            <div class="col-10 ml-5">
+                            <div class="col-10 ml-5 mb-3">
                                 <div class="code-container">
                                     <div class="code">{!! highlight_string($publication->public_content, true) !!}</div>
                                 </div>
@@ -74,27 +75,145 @@
                         </div>
                         <div class="line border-bottom" style="width: 95%; margin:auto"></div>
 
-                        <div class="row justify-content-center" style="margin: 2% 13%">
-                            <!-- Centra los elementos horizontalmente -->
-                            <div class="col-6 co-md-3 mt-2">
-                                <h3 class="text-align-center">Añadir respuesta</h3>
+                        <div class="row justify-content-center" style="margin: auto">
+                            <h4 class="text-align-center mt-3 mb-3">Añadir respuesta</h4>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-10">
+                                <div class="card-body shadow mb-3">
+                                    <form action="/comment/store/{{ $publication->id_publication }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group row mb-4 editor">
+                                            <label for="name"
+                                                class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Respuesta:
+                                            </label>
+                                            <div class="col-sm-12 col-md-8">
+                                                <textarea id="myTextarea" class="shadow @error('public_content') is-invalid @enderror" name="public_content"></textarea>
+                                                @error('public_content')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <script>
+                                            var editor = CodeMirror.fromTextArea(document.getElementById('myTextarea'), {
+                                                lineNumbers: true,
+                                                mode: 'javascript', // modo de lenguaje
+                                                extraKeys: {
+                                                    "Ctrl-Space": "autocomplete"
+                                                }, // activar autocompletado (opcional)
+                                                autoCloseBrackets: true, // cerrar automáticamente corchetes (opcional)
+                                                indentUnit: 4 // establecer la unidad de indentación (opcional)
+                                            });
+
+                                            editor.on("beforeChange", function(instance, changeObj) {
+                                                // Obtener la posición del cursor
+                                                var cursorPos = editor.getCursor();
+                                                // Si se está pegando texto y no es una sola línea
+                                                if (changeObj.origin == "paste" && changeObj.text.length > 1) {
+                                                    // Obtener el texto pegado
+                                                    var pastedText = changeObj.text.join("\n");
+                                                    // Aplicar indentación al texto pegado
+                                                    var indentedText = editor.options.indentWithTabs ? pastedText.replace(/^\t*/mg, "") : pastedText
+                                                        .replace(new RegExp("^" + " ".repeat(editor.options.indentUnit), "mg"), "");
+                                                    // Actualizar el texto en el editor con la indentación aplicada
+                                                    instance.replaceRange(indentedText, {
+                                                        line: cursorPos.line,
+                                                        ch: 0
+                                                    }, {
+                                                        line: cursorPos.line,
+                                                        ch: 0
+                                                    }, "+input");
+                                                    // Cancelar el cambio predeterminado
+                                                    changeObj.cancel();
+                                                }
+                                            });
+                                        </script>
+
+                                        <div class="form-group row mb-4">
+                                            <label for="files"
+                                                class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Cargar
+                                                Imágenes</label>
+                                            <div class="col-sm-12 col-md-8">
+                                                <div class="border p-3">
+                                                    <label for="files" class="btn btn-light btn-block mb-3">
+                                                        <i class="fas fa-upload mr-2"></i>Seleccionar imágenes
+                                                    </label>
+                                                    <input type="file" id="files" name="public_image[]"
+                                                        accept="image/*" multiple style="display: none;">
+                                                    <div id="imagePreview"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            document.getElementById('files').addEventListener('change', function() {
+                                                var imagePreview = document.getElementById('imagePreview');
+
+                                                for (var i = 0; i < this.files.length; i++) {
+                                                    var file = this.files[i];
+
+                                                    // Verificar si el archivo es una imagen
+                                                    if (!file.type.startsWith('image/')) {
+                                                        continue;
+                                                    }
+
+                                                    var reader = new FileReader();
+                                                    reader.onload = function(e) {
+                                                        var img = document.createElement('img');
+                                                        img.src = e.target.result;
+                                                        img.classList.add('img-thumbnail', 'mr-2', 'mb-2');
+                                                        img.style.maxWidth = '150px'; // Ajustar el tamaño máximo de la imagen
+                                                        imagePreview.appendChild(img);
+                                                    };
+                                                    reader.readAsDataURL(file);
+                                                }
+                                            });
+                                        </script>
+
+                                    </form>
+                                </div>
                             </div>
-                            <form action="/comment/store/{{ $publication->id_publication }}" method="post"
-                                enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group row mb-4 mt-3">
-                                    <label for="comment_content"></label>
-                                    <div class="col-sm-12 col-md-12 col-lg-12 mt-1">
-                                        <textarea name="comment_content" class="summernote"></textarea>
+                        </div>
+
+
+                        <div class="line border-bottom" style="width: 95%; margin:auto"></div>
+                        @if ($comments != false)
+                            @foreach ($comments as $comment)
+                                <div class="row justofy-content-center mt-3 ml-5">
+                                    <div class="col-12 col-md-11 col-lg-11">
+                                        <div class="card shadow ">
+                                            <div class="card-header">
+
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="col-10 col-md-8">
+                                                    {{-- <div class="code">{!! highlight_string($comment->comment_content, true) !!}</div> --}}
+                                                    <p>
+                                                        {!! $comment->comment_content !!}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-6 text-align-end">
-                                        <input class="btn btn-primary" type="submit" value="Comentar">
+
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="section">
+                                <div class="row justify-content-center" style="margin-top: 3%">
+                                    <div class="container">
+                                        <div class="col-md-12">
+                                            <h1 class="text-align-center">No hay comentarios</h1>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        @endif
+
+
                     </div>
-                    <div class="line border-bottom" style="width: 95%; margin:auto"></div>
                 </div>
             @else
                 <div class="section">

@@ -195,7 +195,16 @@ class PublicationController extends Controller
     public function publicationDetail($id)
     {
         $publication = Publication::find($id);
+        $data = Comment::where('public_comment_id', $id)->orderBy('id_comment', 'desc')->get();
+        $comments = false;
 
-        return view('publications.publicationDetail', compact('publication'));
+        if ($data !== null && $data->count() > 0) {
+            $comments = $data;
+        }
+
+        return view('publications.publicationDetail', [
+            'publication' => $publication,
+            'comments' => $comments,
+        ]);
     }
 }
