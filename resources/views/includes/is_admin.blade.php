@@ -8,7 +8,7 @@
     </a>
     <div class="dropdown-menu dropdown-menu-right">
         <div class="dropdown-title login_time"></div>
-        <a href="features-profile.html" class="dropdown-item has-icon">
+        <a href="/user/get/profile/{{ Auth::user()->id_user }}" class="dropdown-item has-icon">
             <i class="far fa-user"></i> Perfil
         </a>
         <a href="features-activities.html" class="dropdown-item has-icon">
