@@ -1,10 +1,7 @@
 @extends('layouts.master')
 @section('content')
     <div class="section">
-        @php
-            $publications = App\Models\Publication::getAll();
-        @endphp
-        @if (Auth::user() !== null && $publications->count() > 0)
+        @if (Auth::user() !== null && $publications !== false)
             @include('includes.alerts')
             @foreach ($publications as $publication)
                 <div class="row justify-content-center mt-3">
@@ -73,17 +70,21 @@
                                     </div>
                                 @endif
                             </div>
+                            <div class="col-10 ml-4">
+                                <a href="/publication/detail/{{ $publication->id_publication }}"
+                                    class="text-decoration-none p-3">
+                                    <div class="code-container">
+                                        <div class="code">{!! highlight_string($publication->public_content, true) !!}</div>
+                                    </div>
+                                </a>
+                            </div>
 
-                            <a href="" class="text-decoration-none p-3">
-                                <div class="code-container">
-                                    <div class="code">{!! highlight_string($publication->public_content, true) !!}</div>
-                                </div>
-                            </a>
                             <div class="sticky-bottom" style="padding: 2% 5%">
                                 <div class="row mt-5">
-                                    <div class="col-md-4 justify-content-start">
-                                        <span
-                                            class="mr-3"><strong>Comentarios({{ count($publication->comments) }})</strong></span>
+                                    <div class="col-md-4 justify-content-start ">
+                                        <a href="/publication/detail/{{ $publication->id_publication }}"
+                                            class="btn btn-primary">Comentarios({{ count($publication->comments) }})</a>
+
                                     </div>
                                     @if (Auth::user()->id_user === $publication->user_public_id)
                                         <div class="col-md-8 d-flex justify-content-end">
@@ -112,6 +113,12 @@
                             </div>
                         </div>
             @endforeach
+
+            <div class="row">
+                <div class="col-md-6" style="margin-left: 9%;">
+                    {{ $publications->links('pagination::bootstrap-4') }}
+                </div>
+            </div>
         @else
             <div class="section">
                 <div class="row justify-content-center" style="margin-top: 3%">
@@ -123,4 +130,5 @@
                 </div>
             </div>
         @endif
-    @endsection
+    </div>
+@endsection
