@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\UserController;
@@ -18,9 +19,11 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 Auth::routes();
 
@@ -70,4 +73,12 @@ Route::controller(ResourceController::class)->group(function () {
     Route::get('/resource/delete/{id_resource}', 'destroy');
     Route::get('/resource/list', 'resourcesList');
     Route::get('/resource/detail/{id_resource}', 'show');
+});
+
+Route::controller(CommentController::class)->group(function () {
+    Route::post('/comment/store/{id_publication}', 'store');
+    Route::get('/comment/image/{image_path}', 'getImageComment');
+    Route::get('/comment/edit/{id_comment}/{id_publication}', 'edit');
+    Route::post('/comment/update/{id_coomment}', 'update');
+    Route::get('comment/destroy/{id_coomment}', 'destroy');
 });
