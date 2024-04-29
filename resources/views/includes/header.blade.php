@@ -84,7 +84,8 @@
             @else
                 <div class="navbar-bg"></div>
                 <nav class="navbar navbar-expand-lg main-navbar">
-                    <form class="form-inline mr-auto">
+                    <form action="/publication/search" method="post" class="form-inline mr-auto">
+                        @csrf
                         <ul class="navbar-nav mr-3">
                             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i
                                         class="fas fa-bars"></i></a></li>
@@ -92,8 +93,8 @@
                                         class="fas fa-search"></i></a></li>
                         </ul>
                         <div class="search-element">
-                            <input class="form-control" type="search" placeholder="Search" aria-label="Search"
-                                data-width="250">
+                            <input class="form-control" type="search" name="research" placeholder="Search"
+                                aria-label="Search" data-width="250">
                             <button class="btn" type="submit"><i class="fas fa-search"></i></button>
                             <div class="search-backdrop"></div>
                         </div>

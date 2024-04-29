@@ -55,4 +55,5 @@ Route::controller(PublicationController::class)->group(function () {
     Route::get('/publication/list', 'getPublicationsByDate');
     Route::get('/show/publication/{id_user}', 'show');
     Route::get('/publication/detail/{id_publication}', 'publicationDetail');
+    Route::post('/publication/search', 'getPublicationsByresearch');
 });
