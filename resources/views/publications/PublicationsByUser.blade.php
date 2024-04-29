@@ -1,10 +1,6 @@
 @extends('layouts.master')
 @section('content')
     <div class="section">
-
-        @php
-            $publications = App\Models\Publication::getAll();
-        @endphp
         @if (Auth::user() !== null && $publications->count() > 0)
             @include('includes.alerts')
             @foreach ($publications as $publication)
@@ -31,7 +27,8 @@
                                         publicado {{ $publication->created_at->locale('es')->diffForHumans() }}</h4>
                                     <h4 class="card-title ml-3">
                                         Por:
-                                        <a href="" class="text-decoration-none">
+                                        <a href="/user/get/profile/{{ $publication->user->id_user }}"
+                                            class="text-decoration-none">
                                             {{ $publication->user->nick_name }}
                                         </a>
                                     </h4>
