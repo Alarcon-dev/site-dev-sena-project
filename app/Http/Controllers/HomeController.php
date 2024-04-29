@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Publication;
 use Illuminate\Http\Request;
+use PHPUnit\Event\Test\ComparatorRegisteredSubscriber;
 
 class HomeController extends Controller
 {
@@ -25,16 +26,18 @@ class HomeController extends Controller
     public function index()
     {
         $data = Publication::orderBy('id_publication', 'desc')->paginate(4);
-
+        $publications = false;
         if ($data->count() > 0) {
             $publications = $data;
-        } else {
-            $publications = false;
         }
+<<<<<<< HEAD
 
 
         return view('home', [
             'publications' => $publications
         ]);
+=======
+        return view('home', Compact('publications'));
+>>>>>>> feature/gestion_de_publicaciones
     }
 }

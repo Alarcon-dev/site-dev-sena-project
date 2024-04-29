@@ -189,6 +189,23 @@ class PublicationController extends Controller
         return $publications;
     }
 
+    public function getPublicationsByresearch(Request $request)
+    {
+        $publications = false;
+        $palabrasClave = $request->research;
+        $resultados = Publication::where('public_title', 'like', '%' . $palabrasClave . '%')->orWhere(
+            'public_content',
+            'like',
+            '%' . $palabrasClave . '%'
+        )->get();
+
+        if ($resultados) {
+            $publications = $resultados;
+        }
+
+        return view('publications.researchPublication', compact('publications'));
+    }
+
     public function getPublicationsByDate()
     {
         $publications = Publication::OrderBy('created_at', 'desc')->get();
