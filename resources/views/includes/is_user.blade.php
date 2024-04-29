@@ -7,7 +7,7 @@
     </a>
     <div class="dropdown-menu dropdown-menu-right">
         <div class="dropdown-title"></div>
-        <a href="features-profile.html" class="dropdown-item has-icon">
+        <a href="/user/get/profile/{{ $publication->Auth::user()->id_user }}" class="dropdown-item has-icon">
             <i class="far fa-user"></i> Perfil
         </a>
         <a href="/show/publication/{{ Auth::user()->id_user }}" class="dropdown-item has-icon">
