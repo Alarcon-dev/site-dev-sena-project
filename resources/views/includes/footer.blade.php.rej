@@ -1,0 +1,8 @@
+diff a/resources/views/includes/footer.blade.php b/resources/views/includes/footer.blade.php	(rejected hunks)
+@@ -1,5 +1,6 @@
+ <footer class="main-footer">
+     <div class="footer-left">
++        Copyright &copy; 2024 <div class="bullet"></div> Desarrollado por <a href="https://nauval.in/">Steven Alarcon</a>
+         & <a href="https://nauval.in/">Angie Salazar</a>
+     </div>
+     <div class="footer-right">
