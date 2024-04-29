@@ -48,7 +48,7 @@ class ResourceController extends Controller
             'resource_title' => ['string', 'max:255'],
             'cate_resource_id' => ['string', 'max:255'],
             'resource_description' => ['string', 'max:5000'],
-            'resource_file' => ['file', 'max:20000', 'mimes:pdf'],
+            'resource_file' => ['file', 'max:100000', 'mimes:pdf'],
             'resource_author' => ['string', 'max:255'],
             'resource_edition' => ['date', 'date_format:Y-m-d'],
             'resource_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
