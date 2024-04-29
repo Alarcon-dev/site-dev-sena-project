@@ -27,8 +27,7 @@
                                         publicado {{ $publication->created_at->locale('es')->diffForHumans() }}</h4>
                                     <h4 class="card-title ml-3">
                                         Por:
-                                        <a href="/user/get/profile/{{ $publication->user_public_id }}"
-                                            class="text-decoration-none">
+                                        <a href="" class="text-decoration-none">
                                             {{ $publication->user->nick_name }}
                                         </a>
                                     </h4>
