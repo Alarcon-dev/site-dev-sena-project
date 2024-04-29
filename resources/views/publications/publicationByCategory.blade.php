@@ -80,9 +80,10 @@
                             </a>
                             <div class="sticky-bottom" style="padding: 2% 5%">
                                 <div class="row mt-5">
-                                    <div class="col-md-4 justify-content-start">
-                                        <span
-                                            class="mr-3"><strong>Comentarios({{ count($publication->comments) }})</strong></span>
+                                    <div class="col-md-4 justify-content-start ">
+                                        <a href="/publication/detail/{{ $publication->id_publication }}"
+                                            class="btn btn-primary">Comentarios({{ count($publication->comments) }})</a>
+
                                     </div>
                                     @if (Auth::user()->id_user === $publication->user_public_id)
                                         <div class="col-md-8 d-flex justify-content-end">
@@ -99,7 +100,7 @@
                                         <div class="sticky-bottom">
                                             <div class="row" style="margin-top: -4%; margin-bottom: 3%">
                                                 <div class="col-md-12 d-flex justify-content-end">
-                                                    <a href="/publication/destroy/{{ $publication->id_publication }}else"
+                                                    <a href="/publication/destroy/{{ $publication->id_publication }}"
                                                         class="btn btn-danger btn-action mr-3" data-toggle="tooltip"
                                                         title="Eliminar">
                                                         <i class="fas fa-trash"></i></a>
