@@ -34,19 +34,28 @@
                 @endif
             </ul>
         </li>
-        <li><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank
-                    Page</span></a></li>
         <li class="dropdown">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i>
-                <span>Bootstrap</span></a>
+                <span>contenido x categoria</span></a>
+            @php
+                $categories = App\Models\Resource::getAll();
+
+            @endphp
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="bootstrap-alert.html">Alert</a></li>
-                <li><a class="nav-link" href="bootstrap-badge.html">Badge</a></li>
+                @if ($categories && $categories->count() > 0)
+                    @foreach ($categories as $categorie)
+                        <li class=active><a class="nav-link"
+                                href="/publication/category/{{ $categorie->id_categorie }}">{{ $categorie->categorie_name }}</a>
+                        </li>
+                    @endforeach
+                @endif
             </ul>
         </li>
-        <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-            <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">
-                <i class="fas fa-rocket"></i> Documentation
-            </a>
-        </div>
+    </ul>
+
+    <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
+        <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">
+            <i class="fas fa-rocket"></i> Documentation
+        </a>
+    </div>
 </aside>
