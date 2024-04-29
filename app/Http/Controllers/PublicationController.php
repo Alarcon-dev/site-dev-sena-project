@@ -192,6 +192,20 @@ class PublicationController extends Controller
         return view('publications.list', compact('publications'));
     }
 
+    public function PublicationsByCategory($id_category)
+    {
+
+        $data = Publication::where('cate_public_id', $id_category)->get();
+
+        $publications = false;
+
+        if ($data !== null && $data->count() > 0) {
+            $publications = $data;
+        }
+
+        return view('publications.publicationByCategory', compact('publications'));
+    }
+
     public function publicationDetail($id)
     {
         $publication = Publication::find($id);
