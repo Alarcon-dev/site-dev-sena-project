@@ -30,14 +30,6 @@ class HomeController extends Controller
         if ($data->count() > 0) {
             $publications = $data;
         }
-<<<<<<< HEAD
-
-
-        return view('home', [
-            'publications' => $publications
-        ]);
-=======
         return view('home', Compact('publications'));
->>>>>>> feature/gestion_de_publicaciones
     }
 }
