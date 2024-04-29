@@ -4,14 +4,19 @@
         <div class="section-body">
             <h2 class="section-title">Editar Coemntario</h2>
             <div class="row">
+                @include('includes.alerts')
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <h4>!!edita tu publicación!!</h4>
                         </div>
                         <div class="card-body">
-                            <form action="" method="POST" enctype="multipart/form-data">
+                            <form action="/comment/update/{{ $comment->id_comment }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
+
+                                <input type="hidden" name="id_publication"
+                                    value="{{ isset($publication) ? $publication->id_publication : '' }}">
                                 <div class="form-group row mb-4 editor">
                                     <label for="name"
                                         class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Content</label>

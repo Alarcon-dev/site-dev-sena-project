@@ -52,10 +52,10 @@
                         <div class="row">
                             @if (Auth::user()->id_user === $comment->user->id_user)
                                 <div class="col-md-12 d-flex justify-content-end">
-                                    <a href="/publication/destroy/{{ $comment->id_comment }}"
+                                    <a href="/comment/destroy/{{ $comment->id_comment }}"
                                         class="btn btn-danger btn-action mr-3" data-toggle="tooltip" title="Eliminar">
                                         <i class="fas fa-trash"></i></a>
-                                    <a href="/comment/edit/{{ $comment->id_comment }}"
+                                    <a href="/comment/edit/{{ $comment->id_comment }}/{{ $publication->id_publication }}"
                                         class="btn btn-success btn-action" data-toggle="tooltip" title="Editar">
                                         <i class="fas fa-edit"></i></a>
                                 </div>
