@@ -59,8 +59,8 @@ Route::controller(PublicationController::class)->group(function () {
     Route::get('/publication/list', 'getPublicationsByDate');
     Route::get('/show/publication/{id_user}', 'show');
     Route::get('/publication/detail/{id_publication}', 'publicationDetail');
-<<<<<<< HEAD
     Route::get('/publication/category/{id_category}', 'PublicationsByCategory');
+    Route::post('/publication/search', 'getPublicationsByresearch');
 });
 
 
@@ -83,7 +83,4 @@ Route::controller(CommentController::class)->group(function () {
     Route::get('/comment/edit/{id_comment}/{id_publication}', 'edit');
     Route::post('/comment/update/{id_coomment}', 'update');
     Route::get('comment/destroy/{id_coomment}', 'destroy');
-=======
-    Route::post('/publication/search', 'getPublicationsByresearch');
->>>>>>> feature/gestion_de_publicaciones
 });
