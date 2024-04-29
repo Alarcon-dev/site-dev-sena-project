@@ -140,11 +140,8 @@ class CommentController extends Controller
 
         $id_publication = $request->id_publication;
 
-        $publication = Publication::find($id_publication);
-        $comments = Comment::where('public_comment_id', $id_publication)->orderBy('id_comment', 'desc')->get();
-
         if ($updateComment) {
-            return view('publications.publicationDetail', compact('publication', 'comments'))->with('success', 'comentario actualizado');
+            return redirect('/publication/detail/' . $id_publication)->with('success', 'Comentario agreagado');
         }
 
         return redirect()->back()->with('wrong', 'error al actualizar comentario');
