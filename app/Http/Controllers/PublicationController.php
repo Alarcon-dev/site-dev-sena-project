@@ -85,8 +85,12 @@ class PublicationController extends Controller
     public function show(string $id)
     {
 
-        $publications = Publication::where('user_public_id', $id)->get();
+        $data = Publication::where('user_public_id', $id)->get();
+        $publications = false;
 
+        if ($data !== null && $data) {
+            $publications = $data;
+        }
         return view('publications.PublicationsByUser', compact('publications'));
     }
 
