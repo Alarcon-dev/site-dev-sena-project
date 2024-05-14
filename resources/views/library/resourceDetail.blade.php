@@ -24,12 +24,18 @@
                             <a class="btn btn-primary" href="/file/download/{{ $resource->resource_file }}">Descargar
                                 recurso</a>
                             @role('admin')
-                                <a href="/resource/delete/{{ $resource->id_resources }}"
-                                    class="btn btn-danger btn-action mr-2 ml-2" data-toggle="tooltip" title="Eliminar">
-                                    <i class="fas fa-trash"></i></a>
-                                <a href="/resource/edit/{{ $resource->id_resources }}" class="btn btn-success btn-action"
-                                    data-toggle="tooltip" title="Editar">
-                                    <i class="fas fa-edit"></i></a>
+                                <div class="row justify-content-center mt-2">
+                                    <div class="col-md-5">
+                                        <a href="/resource/delete/{{ $resource->id_resources }}"
+                                            class="btn btn-danger btn-action mr-2 ml-2" data-toggle="tooltip" title="Eliminar">
+                                            <i class="fas fa-trash"></i></a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="/resource/edit/{{ $resource->id_resources }}"
+                                            class="btn btn-success btn-action" data-toggle="tooltip" title="Editar">
+                                            <i class="fas fa-edit"></i></a>
+                                    </div>
+                                </div>
                             @endrole
                         </div>
 
